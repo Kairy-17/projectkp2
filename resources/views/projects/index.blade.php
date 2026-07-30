@@ -55,7 +55,7 @@
     <!-- Content scrollable -->
     <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         
-        <div class="glass p-4 rounded-2xl shadow-sm mb-6 flex flex-col sm:flex-row gap-4 items-end">
+        <div class="glass p-4 rounded-2xl shadow-sm mb-6 flex flex-col sm:flex-row gap-4 items-end relative z-30">
             <form action="{{ route('projects.index') }}" method="GET" class="w-full flex flex-col sm:flex-row gap-4 items-end" x-ref="filterForm">
                 
                 <!-- Custom Dropdown Tahun -->
