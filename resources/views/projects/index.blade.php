@@ -149,7 +149,7 @@
                             </td>
                             <td class="px-6 py-4 text-slate-600 font-medium">{{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</td>
                             <td class="px-6 py-4 text-right">
-                                <a href="{{ route('projects.edit', $project->id) }}" class="text-slate-400 hover:text-indigo-600 transition-colors">Edit</a>
+                                <a href="{{ route('projects.edit', $project->id) }}" class="text-slate-400 hover:text-indigo-600 opacity-0 group-hover:opacity-100 transition-all">Edit</a>
                             </td>
                         </tr>
                         @empty
