@@ -46,26 +46,6 @@
                         <p class="text-[10px] text-slate-500 mt-1">Tahan Ctrl/Cmd untuk memilih lebih dari satu.</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Tahun</label>
-                        <input type="number" name="tahun" value="{{ $project->tahun }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Bulan</label>
-                        <select name="bulan" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white" required>
-                            @for($m = 1; $m <= 12; $m++)
-                                <option value="{{ $m }}" {{ $project->bulan == $m ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $m, 10)) }}</option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Minggu Ke-</label>
-                        <select name="minggu" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white" required>
-                            @for($w = 1; $w <= 5; $w++)
-                                <option value="{{ $w }}" {{ $project->minggu == $w ? 'selected' : '' }}>{{ $w }}</option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Status Project</label>
                         <select name="status_project" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white">
                             <option value="Not yet" {{ $project->status_project == 'Not yet' ? 'selected' : '' }}>Not yet</option>

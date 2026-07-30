@@ -39,6 +39,12 @@ class ProjectController extends Controller
         if(!isset($data['pic'])) {
             $data['pic'] = [];
         }
+        
+        $now = now();
+        $data['tahun'] = $now->year;
+        $data['bulan'] = $now->month;
+        $data['minggu'] = ceil($now->day / 7);
+
         Project::create($data);
         return redirect()->route('projects.index')->with('success', 'Project berhasil ditambahkan.');
     }
