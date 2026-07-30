@@ -74,11 +74,32 @@
                         <label class="block text-sm font-medium text-slate-700 mb-1">Target Selesai (Due Date)</label>
                         <input type="date" name="target_selesai" value="{{ $project->target_selesai }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                     </div>
-                    <div class="md:col-span-2">
+                </div>
+
+                <h3 class="font-semibold text-lg text-slate-800 mb-4 mt-8 pb-2 border-b border-slate-100">Informasi Tambahan & Progress</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Progress (%)</label>
-                        <input type="number" name="progress" min="0" max="100" value="{{ $project->progress }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                        <input type="number" name="progress" min="0" max="100" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" value="{{ $project->progress }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Contact Client</label>
+                        <input type="text" name="contact_client" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" value="{{ $project->contact_client }}">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Milestone Saat Ini</label>
+                        <input type="text" name="milestone_saat_ini" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" value="{{ $project->milestone_saat_ini }}">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Next Action</label>
+                        <input type="text" name="next_action" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" value="{{ $project->next_action }}">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Kendala / Issue</label>
+                        <textarea name="kendala_issue" rows="2" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">{{ $project->kendala_issue }}</textarea>
                     </div>
                 </div>
+
                 <div class="pt-4 flex justify-end gap-3 border-t border-slate-100 mt-6">
                     <a href="{{ route('projects.index') }}" class="px-5 py-2.5 border border-slate-300 rounded-xl text-slate-700 font-medium hover:bg-slate-50 transition-colors">Batal</a>
                     <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-sm shadow-indigo-200 transition-colors">Simpan Perubahan</button>
