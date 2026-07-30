@@ -20,6 +20,10 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
             Reports
         </a>
+        <a href="{{ route('team-members.index') }}" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            Kelola Tim
+        </a>
     </nav>
     <div class="p-4 border-t border-slate-100">
         <div class="flex items-center gap-3">
@@ -50,25 +54,60 @@
     <!-- Content scrollable -->
     <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         
-        <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="glass p-5 rounded-2xl shadow-sm">
-                <p class="text-sm text-slate-500 font-medium mb-1">Total Projects</p>
-                <p class="text-3xl font-bold text-slate-800">{{ $projects->count() }}</p>
-            </div>
-            <div class="glass p-5 rounded-2xl shadow-sm border-l-4 border-amber-400">
-                <p class="text-sm text-slate-500 font-medium mb-1">On Going</p>
-                <p class="text-3xl font-bold text-slate-800">{{ $projects->where('status_project', 'On going')->count() }}</p>
-            </div>
-            <div class="glass p-5 rounded-2xl shadow-sm border-l-4 border-slate-400">
-                <p class="text-sm text-slate-500 font-medium mb-1">Hold / Not Yet</p>
-                <p class="text-3xl font-bold text-slate-800">{{ $projects->whereIn('status_project', ['Hold', 'Not yet'])->count() }}</p>
-            </div>
-            <div class="glass p-5 rounded-2xl shadow-sm border-l-4 border-emerald-400">
-                <p class="text-sm text-slate-500 font-medium mb-1">Done</p>
-                <p class="text-3xl font-bold text-slate-800">{{ $projects->where('status_project', 'Done')->count() }}</p>
-            </div>
+        <!-- Filter Bar -->
+        <div class="glass p-4 rounded-2xl shadow-sm mb-6 flex flex-col sm:flex-row gap-4 items-end">
+            <form action="{{ route('projects.index') }}" method="GET" class="w-full flex flex-col sm:flex-row gap-4 items-end">
+                <div class="w-full sm:w-auto">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Tahun</label>
+                    <select name="tahun" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Semua</option>
+                        @for($y = date('Y') - 2; $y <= date('Y') + 2; $y++)
+                            <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="w-full sm:w-auto">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Bulan</label>
+                    <select name="bulan" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Semua</option>
+                        @for($m = 1; $m <= 12; $m++)
+                            <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $m, 10)) }}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="w-full sm:w-auto">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Minggu</label>
+                    <select name="minggu" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Semua</option>
+                        @for($w = 1; $w <= 5; $w++)
+                            <option value="{{ $w }}" {{ request('minggu') == $w ? 'selected' : '' }}>Minggu ke-{{ $w }}</option>
+                        @endfor
+                    </select>
+                </div>
+                <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium rounded-lg transition-colors">Terapkan Filter</button>
+                <a href="{{ route('projects.index') }}" class="w-full sm:w-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors text-center">Reset</a>
+            </form>
         </div>
+
+        @php
+            function getStatusColor($status) {
+                switch($status) {
+                    case 'Not yet': return 'bg-red-100 text-red-700 border-red-200';
+                    case 'On going': return 'bg-blue-100 text-blue-700 border-blue-200';
+                    case 'Hold': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+                    case 'Done': return 'bg-green-100 text-green-700 border-green-200';
+                    default: return 'bg-slate-100 text-slate-700 border-slate-200';
+                }
+            }
+            function getPriorityColor($priority) {
+                switch($priority) {
+                    case 'High': return 'bg-rose-100 text-rose-700 border-rose-200';
+                    case 'Medium': return 'bg-amber-100 text-amber-700 border-amber-200';
+                    case 'Low': return 'bg-cyan-100 text-cyan-700 border-cyan-200';
+                    default: return 'bg-slate-100 text-slate-700 border-slate-200';
+                }
+            }
+        @endphp
 
         <!-- Table Section (Desktop) -->
         <div class="glass rounded-2xl shadow-sm border border-slate-200 overflow-hidden hidden md:block">
@@ -80,7 +119,7 @@
                     <thead class="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider">
                         <tr>
                             <th class="px-6 py-4 font-semibold">Project</th>
-                            <th class="px-6 py-4 font-semibold">PIC</th>
+                            <th class="px-6 py-4 font-semibold">PIC (Tim Terlibat)</th>
                             <th class="px-6 py-4 font-semibold">Status</th>
                             <th class="px-6 py-4 font-semibold">Priority</th>
                             <th class="px-6 py-4 font-semibold">Target</th>
@@ -91,24 +130,29 @@
                         @forelse($projects as $project)
                         <tr class="hover:bg-white/80 transition-colors group">
                             <td class="px-6 py-4">
-                                <div class="font-medium text-slate-900">{{ $project->nama_project }} ({{ $project->project_id }})</div>
+                                <a href="{{ route('projects.show', $project->id) }}" class="font-bold text-indigo-700 hover:text-indigo-900 block">{{ $project->nama_project }} ({{ $project->project_id }})</a>
                                 <div class="text-xs text-slate-500 mt-0.5">{{ $project->durasi_project ?? '-' }}</div>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold">{{ substr($project->pic ?? 'U', 0, 1) }}</div>
-                                    <span>{{ $project->pic }}</span>
+                                <div class="flex flex-wrap gap-1">
+                                    @if(is_array($project->pic))
+                                        @foreach($project->pic as $p)
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-700">{{ $p }}</span>
+                                        @endforeach
+                                    @else
+                                        <span class="text-slate-500">-</span>
+                                    @endif
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">{{ $project->status_project }}</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getStatusColor($project->status_project) }}">{{ $project->status_project }}</span>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">{{ $project->priority }}</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getPriorityColor($project->priority) }}">{{ $project->priority }}</span>
                             </td>
-                            <td class="px-6 py-4 text-slate-600">{{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</td>
+                            <td class="px-6 py-4 text-slate-600 font-medium">{{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</td>
                             <td class="px-6 py-4 text-right">
-                                <a href="{{ route('projects.edit', $project->id) }}" class="text-indigo-600 hover:text-indigo-900 opacity-0 group-hover:opacity-100 transition-opacity">Edit</a>
+                                <a href="{{ route('projects.edit', $project->id) }}" class="text-slate-400 hover:text-indigo-600 transition-colors">Edit</a>
                             </td>
                         </tr>
                         @empty
@@ -124,16 +168,21 @@
         <!-- Mobile View (Cards) -->
         <div class="md:hidden space-y-4 pb-20">
             @forelse($projects as $project)
-            <div class="glass p-4 rounded-xl relative">
-                <div class="absolute top-4 right-4"><span class="px-2 py-1 bg-slate-100 text-slate-700 text-[10px] font-bold rounded uppercase">{{ $project->priority }}</span></div>
-                <h4 class="font-bold text-lg mb-1 pr-12">{{ $project->nama_project }} ({{ $project->project_id }})</h4>
+            <div class="glass p-4 rounded-xl relative border border-slate-100">
+                <div class="absolute top-4 right-4 flex flex-col gap-1 items-end">
+                    <span class="px-2 py-1 {{ getPriorityColor($project->priority) }} text-[10px] font-bold rounded uppercase border">{{ $project->priority }}</span>
+                    <span class="px-2 py-1 {{ getStatusColor($project->status_project) }} text-[10px] font-bold rounded border">{{ $project->status_project }}</span>
+                </div>
+                <a href="{{ route('projects.show', $project->id) }}" class="font-bold text-lg mb-1 pr-20 text-indigo-700 block">{{ $project->nama_project }} ({{ $project->project_id }})</a>
                 <p class="text-xs text-slate-500 mb-3">Target: {{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</p>
                 <div class="flex items-center justify-between mt-4">
-                    <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold">{{ substr($project->pic ?? 'U', 0, 1) }}</div>
-                        <span class="text-sm font-medium">{{ $project->pic }}</span>
+                    <div class="flex flex-wrap gap-1">
+                        @if(is_array($project->pic))
+                            @foreach($project->pic as $p)
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700">{{ $p }}</span>
+                            @endforeach
+                        @endif
                     </div>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">{{ $project->status_project }}</span>
                 </div>
             </div>
             @empty
@@ -153,6 +202,10 @@
     <a href="{{ route('projects.index') }}" class="flex flex-col items-center gap-1 text-indigo-600">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
         <span class="text-[10px] font-medium">Projects</span>
+    </a>
+    <a href="{{ route('team-members.index') }}" class="flex flex-col items-center gap-1 text-slate-400">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <span class="text-[10px] font-medium">Team</span>
     </a>
     <a href="{{ route('reports.index') }}" class="flex flex-col items-center gap-1 text-slate-400">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>

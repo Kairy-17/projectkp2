@@ -15,10 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $members = ['puti', 'marlis', 'adel', 'indah', 'puji', 'joko', 'desi', 'criana', 'adam', 'ilham', 'zaky', 'fandy', 'salsa'];
+        foreach($members as $member) {
+            \App\Models\TeamMember::create(['nama' => ucfirst($member)]);
+        }
+
         \App\Models\Project::create([
             'project_id' => 'DH',
             'nama_project' => 'Data Hen',
-            'pic' => 'Puti',
+            'pic' => ['Puti', 'Marlis'],
+            'tahun' => 2026,
+            'bulan' => 7,
+            'minggu' => 1,
             'status_project' => 'On going',
             'priority' => 'High',
             'durasi_project' => '3 bulan',
@@ -29,7 +37,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\Project::create([
             'project_id' => 'RM',
             'nama_project' => 'Reksa Madani',
-            'pic' => 'Marlis',
+            'pic' => ['Adel'],
+            'tahun' => 2026,
+            'bulan' => 7,
+            'minggu' => 1,
             'status_project' => 'Not yet',
             'priority' => 'Low',
         ]);

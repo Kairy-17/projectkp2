@@ -4,11 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class TeamMember extends Model
 {
     protected $guarded = [];
-
-    protected $casts = [
-        'pic' => 'array',
-    ];
 }

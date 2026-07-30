@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('project_id')->unique()->nullable();
-            $table->string('nama_project')->nullable();
+            $table->string('project_id')->unique();
+            $table->string('nama_project');
             $table->text('deskripsi_singkat')->nullable();
-            $table->string('pic')->nullable();
-            $table->string('tim_terlibat')->nullable();
+            $table->integer('tahun')->nullable();
+            $table->integer('bulan')->nullable();
+            $table->integer('minggu')->nullable();
+            $table->text('pic')->nullable(); // Store JSON array of PICs
             $table->enum('status_project', ['Not yet', 'On going', 'Hold', 'Done'])->default('Not yet');
             $table->enum('priority', ['High', 'Medium', 'Low'])->default('Medium');
             $table->string('durasi_project')->nullable();
