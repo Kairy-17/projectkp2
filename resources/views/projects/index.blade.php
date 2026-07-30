@@ -61,7 +61,7 @@
                     <select name="tahun" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">Semua</option>
                         @for($y = date('Y') - 2; $y <= date('Y') + 2; $y++)
-                            <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                            <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
                         @endfor
                     </select>
                 </div>
@@ -70,7 +70,7 @@
                     <select name="bulan" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">Semua</option>
                         @for($m = 1; $m <= 12; $m++)
-                            <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $m, 10)) }}</option>
+                            <option value="{{ $m }}" {{ $bulan == $m ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $m, 10)) }}</option>
                         @endfor
                     </select>
                 </div>
@@ -79,7 +79,7 @@
                     <select name="minggu" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">Semua</option>
                         @for($w = 1; $w <= 5; $w++)
-                            <option value="{{ $w }}" {{ request('minggu') == $w ? 'selected' : '' }}>Minggu ke-{{ $w }}</option>
+                            <option value="{{ $w }}" {{ $minggu == $w ? 'selected' : '' }}>Minggu ke-{{ $w }}</option>
                         @endfor
                     </select>
                 </div>

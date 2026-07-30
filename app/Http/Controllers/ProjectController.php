@@ -10,21 +10,32 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->has('tahun') || $request->has('bulan') || $request->has('minggu')) {
+            session([
+                'filter_tahun' => $request->tahun,
+                'filter_bulan' => $request->bulan,
+                'filter_minggu' => $request->minggu,
+            ]);
+        }
+
+        $tahun = session('filter_tahun');
+        $bulan = session('filter_bulan');
+        $minggu = session('filter_minggu');
+
         $query = Project::query();
 
-        // Time filtering
-        if ($request->filled('tahun')) {
-            $query->where('tahun', $request->tahun);
+        if ($tahun) {
+            $query->where('tahun', $tahun);
         }
-        if ($request->filled('bulan')) {
-            $query->where('bulan', $request->bulan);
+        if ($bulan) {
+            $query->where('bulan', $bulan);
         }
-        if ($request->filled('minggu')) {
-            $query->where('minggu', $request->minggu);
+        if ($minggu) {
+            $query->where('minggu', $minggu);
         }
 
         $projects = $query->orderBy('created_at', 'desc')->get();
-        return view('projects.index', compact('projects'));
+        return view('projects.index', compact('projects', 'tahun', 'bulan', 'minggu'));
     }
 
     public function create()
