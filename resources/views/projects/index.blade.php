@@ -127,7 +127,7 @@
                         @forelse($projects as $project)
                         <tr class="hover:bg-white/80 transition-colors group">
                             <td class="px-6 py-4">
-                                <a href="{{ route('projects.show', $project->id) }}" class="font-bold text-indigo-700 hover:text-indigo-900 block">{{ $project->nama_project }} ({{ $project->project_id }})</a>
+                                <span class="font-bold text-slate-800 block">{{ $project->nama_project }} ({{ $project->project_id }})</span>
                                 <div class="text-xs text-slate-500 mt-0.5">{{ $project->durasi_project ?? '-' }}</div>
                             </td>
                             <td class="px-6 py-4">
@@ -149,7 +149,10 @@
                             </td>
                             <td class="px-6 py-4 text-slate-600 font-medium">{{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</td>
                             <td class="px-6 py-4 text-right">
-                                <a href="{{ route('projects.edit', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-all">Detail / Edit</a>
+                                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                                    <a href="{{ route('projects.show', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg text-xs font-bold">Detail</a>
+                                    <a href="{{ route('projects.edit', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-bold">Edit</a>
+                                </div>
                             </td>
                         </tr>
                         @empty
