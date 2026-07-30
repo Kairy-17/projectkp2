@@ -54,12 +54,11 @@
     <!-- Content scrollable -->
     <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         
-        <!-- Filter Bar -->
         <div class="glass p-4 rounded-2xl shadow-sm mb-6 flex flex-col sm:flex-row gap-4 items-end">
             <form action="{{ route('projects.index') }}" method="GET" class="w-full flex flex-col sm:flex-row gap-4 items-end">
                 <div class="w-full sm:w-auto">
                     <label class="block text-xs font-medium text-slate-500 mb-1">Tahun</label>
-                    <select name="tahun" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <select name="tahun" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">Semua</option>
                         @for($y = date('Y') - 2; $y <= date('Y') + 2; $y++)
                             <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
@@ -68,7 +67,7 @@
                 </div>
                 <div class="w-full sm:w-auto">
                     <label class="block text-xs font-medium text-slate-500 mb-1">Bulan</label>
-                    <select name="bulan" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <select name="bulan" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">Semua</option>
                         @for($m = 1; $m <= 12; $m++)
                             <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $m, 10)) }}</option>
@@ -77,15 +76,13 @@
                 </div>
                 <div class="w-full sm:w-auto">
                     <label class="block text-xs font-medium text-slate-500 mb-1">Minggu</label>
-                    <select name="minggu" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <select name="minggu" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">Semua</option>
                         @for($w = 1; $w <= 5; $w++)
                             <option value="{{ $w }}" {{ request('minggu') == $w ? 'selected' : '' }}>Minggu ke-{{ $w }}</option>
                         @endfor
                     </select>
                 </div>
-                <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium rounded-lg transition-colors">Terapkan Filter</button>
-                <a href="{{ route('projects.index') }}" class="w-full sm:w-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors text-center">Reset</a>
             </form>
         </div>
 
