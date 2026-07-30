@@ -2,64 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Report;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $reports = \App\Models\Report::all();
+        $reports = Report::orderBy('created_at', 'desc')->get();
         return view('reports.index', compact('reports'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('reports.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Report::create($request->all());
+        return redirect()->route('reports.index')->with('success', 'Laporan berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Report $report)
     {
-        //
+        return view('reports.edit', compact('report'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Report $report)
     {
-        //
+        $report->update($request->all());
+        return redirect()->route('reports.index')->with('success', 'Laporan berhasil diperbarui.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Report $report)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $report->delete();
+        return redirect()->route('reports.index')->with('success', 'Laporan berhasil dihapus.');
     }
 }

@@ -43,7 +43,7 @@
             <h2 class="text-xl font-semibold hidden sm:block">Laporan Kinerja</h2>
         </div>
         <div class="flex items-center gap-4">
-            <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm shadow-emerald-200 transition-all">+ New Report</button>
+            <a href="{{ route('reports.create') }}" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm shadow-emerald-200 transition-all">+ New Report</a>
         </div>
     </header>
 
@@ -101,7 +101,7 @@
                             <td class="px-6 py-4 font-medium text-blue-600">Rp {{ number_format($report->real_income, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 text-emerald-600 font-bold">{{ number_format($report->margin_persen, 1) }}%</td>
                             <td class="px-6 py-4 text-right">
-                                <button class="text-emerald-600 hover:text-emerald-900 opacity-0 group-hover:opacity-100 transition-opacity">Detail</button>
+                                <a href="{{ route('reports.edit', $report->id) }}" class="text-emerald-600 hover:text-emerald-900 opacity-0 group-hover:opacity-100 transition-opacity">Detail / Edit</a>
                             </td>
                         </tr>
                         @empty

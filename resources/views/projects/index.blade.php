@@ -43,7 +43,7 @@
             <h2 class="text-xl font-semibold hidden sm:block">Project Reminder</h2>
         </div>
         <div class="flex items-center gap-4">
-            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm shadow-indigo-200 transition-all">+ New Project</button>
+            <a href="{{ route('projects.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm shadow-indigo-200 transition-all">+ New Project</a>
         </div>
     </header>
 
@@ -108,7 +108,7 @@
                             </td>
                             <td class="px-6 py-4 text-slate-600">{{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</td>
                             <td class="px-6 py-4 text-right">
-                                <button class="text-indigo-600 hover:text-indigo-900 opacity-0 group-hover:opacity-100 transition-opacity">Edit</button>
+                                <a href="{{ route('projects.edit', $project->id) }}" class="text-indigo-600 hover:text-indigo-900 opacity-0 group-hover:opacity-100 transition-opacity">Edit</a>
                             </td>
                         </tr>
                         @empty
