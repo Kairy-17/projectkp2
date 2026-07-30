@@ -29,8 +29,19 @@
     </style>
     @stack('styles')
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-indigo-100 selection:text-indigo-900 flex h-screen overflow-hidden">
-    @yield('content')
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-indigo-100 selection:text-indigo-900 h-screen overflow-hidden">
+    
+    <!-- Page Load Animation Wrapper -->
+    <div x-data="{ loaded: false }" 
+         x-init="setTimeout(() => loaded = true, 50)" 
+         x-show="loaded" 
+         x-transition:enter="transition-all ease-out duration-700" 
+         x-transition:enter-start="opacity-0 translate-y-4 scale-[0.99]" 
+         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+         style="display: none;"
+         class="flex h-full w-full">
+        @yield('content')
+    </div>
     
     <!-- PWA Service Worker Registration -->
     <script>
