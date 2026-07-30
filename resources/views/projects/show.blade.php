@@ -10,7 +10,10 @@
             <h2 class="text-xl font-semibold">Detail Project</h2>
         </div>
         <div>
-            <a href="{{ route('projects.edit', $project->id) }}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors">Edit Project</a>
+            <div class="flex items-center gap-4">
+                @include('partials.notifications')
+                <a href="{{ route('projects.edit', $project->id) }}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors">Edit Project</a>
+            </div>
         </div>
     </header>
 

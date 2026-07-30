@@ -43,6 +43,7 @@
             <h2 class="text-xl font-semibold hidden sm:block">Laporan Kinerja</h2>
         </div>
         <div class="flex items-center gap-4">
+            @include('partials.notifications')
             <a href="{{ route('reports.create') }}" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm shadow-emerald-200 transition-all">+ New Report</a>
         </div>
     </header>
