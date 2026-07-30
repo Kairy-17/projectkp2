@@ -101,7 +101,7 @@
                             <td class="px-6 py-4 font-medium text-blue-600">Rp {{ number_format($report->real_income, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 text-emerald-600 font-bold">{{ number_format($report->margin_persen, 1) }}%</td>
                             <td class="px-6 py-4 text-right">
-                                <a href="{{ route('reports.edit', $report->id) }}" class="text-emerald-600 hover:text-emerald-900 opacity-0 group-hover:opacity-100 transition-opacity">Detail / Edit</a>
+                                <a href="{{ route('reports.edit', $report->id) }}" class="inline-flex items-center px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-all">Detail / Edit</a>
                             </td>
                         </tr>
                         @empty
