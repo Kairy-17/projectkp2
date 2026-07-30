@@ -56,34 +56,74 @@
     <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         
         <div class="glass p-4 rounded-2xl shadow-sm mb-6 flex flex-col sm:flex-row gap-4 items-end">
-            <form action="{{ route('projects.index') }}" method="GET" class="w-full flex flex-col sm:flex-row gap-4 items-end">
-                <div class="w-full sm:w-auto">
+            <form action="{{ route('projects.index') }}" method="GET" class="w-full flex flex-col sm:flex-row gap-4 items-end" x-ref="filterForm">
+                
+                <!-- Custom Dropdown Tahun -->
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $tahun ?: '' }}', label: '{{ $tahun ?: 'Semua' }}' }">
                     <label class="block text-xs font-medium text-slate-500 mb-1">Tahun</label>
-                    <select name="tahun" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="">Semua</option>
+                    <input type="hidden" name="tahun" x-model="selected">
+                    <button type="button" @click="open = !open" @click.away="open = false" 
+                            class="w-full sm:w-36 flex items-center justify-between bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400 group">
+                        <span x-text="label" class="text-slate-700 group-hover:text-indigo-700 transition-colors"></span>
+                        <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 group-hover:text-indigo-500" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" x-cloak 
+                         class="absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden py-1">
+                        <div @click="selected = ''; label = 'Semua'; open = false; setTimeout(() => $refs.filterForm.submit(), 50)" 
+                             class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Semua</div>
                         @for($y = date('Y') - 2; $y <= date('Y') + 2; $y++)
-                            <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
+                            <div @click="selected = '{{ $y }}'; label = '{{ $y }}'; open = false; setTimeout(() => $refs.filterForm.submit(), 50)" 
+                                 class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                                 :class="selected === '{{ $y }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ $y }}</div>
                         @endfor
-                    </select>
+                    </div>
                 </div>
-                <div class="w-full sm:w-auto">
+
+                <!-- Custom Dropdown Bulan -->
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $bulan ?: '' }}', label: '{{ $bulan ? date('F', mktime(0, 0, 0, $bulan, 10)) : 'Semua' }}' }">
                     <label class="block text-xs font-medium text-slate-500 mb-1">Bulan</label>
-                    <select name="bulan" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="">Semua</option>
+                    <input type="hidden" name="bulan" x-model="selected">
+                    <button type="button" @click="open = !open" @click.away="open = false" 
+                            class="w-full sm:w-40 flex items-center justify-between bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400 group">
+                        <span x-text="label" class="text-slate-700 group-hover:text-indigo-700 transition-colors"></span>
+                        <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 group-hover:text-indigo-500" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" x-cloak 
+                         class="absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden py-1 max-h-64 overflow-y-auto">
+                        <div @click="selected = ''; label = 'Semua'; open = false; setTimeout(() => $refs.filterForm.submit(), 50)" 
+                             class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Semua</div>
                         @for($m = 1; $m <= 12; $m++)
-                            <option value="{{ $m }}" {{ $bulan == $m ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $m, 10)) }}</option>
+                            <div @click="selected = '{{ $m }}'; label = '{{ date('F', mktime(0, 0, 0, $m, 10)) }}'; open = false; setTimeout(() => $refs.filterForm.submit(), 50)" 
+                                 class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                                 :class="selected === '{{ $m }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ date('F', mktime(0, 0, 0, $m, 10)) }}</div>
                         @endfor
-                    </select>
+                    </div>
                 </div>
-                <div class="w-full sm:w-auto">
+
+                <!-- Custom Dropdown Minggu -->
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $minggu ?: '' }}', label: '{{ $minggu ? 'Minggu ke-'.$minggu : 'Semua' }}' }">
                     <label class="block text-xs font-medium text-slate-500 mb-1">Minggu</label>
-                    <select name="minggu" onchange="this.form.submit()" class="w-full sm:w-32 rounded-lg border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="">Semua</option>
+                    <input type="hidden" name="minggu" x-model="selected">
+                    <button type="button" @click="open = !open" @click.away="open = false" 
+                            class="w-full sm:w-40 flex items-center justify-between bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400 group">
+                        <span x-text="label" class="text-slate-700 group-hover:text-indigo-700 transition-colors"></span>
+                        <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 group-hover:text-indigo-500" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" x-cloak 
+                         class="absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden py-1">
+                        <div @click="selected = ''; label = 'Semua'; open = false; setTimeout(() => $refs.filterForm.submit(), 50)" 
+                             class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Semua</div>
                         @for($w = 1; $w <= 5; $w++)
-                            <option value="{{ $w }}" {{ $minggu == $w ? 'selected' : '' }}>Minggu ke-{{ $w }}</option>
+                            <div @click="selected = '{{ $w }}'; label = 'Minggu ke-{{ $w }}'; open = false; setTimeout(() => $refs.filterForm.submit(), 50)" 
+                                 class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                                 :class="selected === '{{ $w }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Minggu ke-{{ $w }}</div>
                         @endfor
-                    </select>
+                    </div>
                 </div>
+
             </form>
         </div>
 
