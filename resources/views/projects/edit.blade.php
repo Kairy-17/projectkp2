@@ -36,14 +36,18 @@
                         <textarea name="deskripsi_singkat" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">{{ $project->deskripsi_singkat }}</textarea>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">PIC (Tim Terlibat)</label>
-                        <select name="pic[]" multiple class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white h-24">
-                            @php $selectedPics = is_array($project->pic) ? $project->pic : []; @endphp
+                        <label class="block text-sm font-medium text-slate-700 mb-2">PIC (Tim Terlibat)</label>
+                        <div class="flex flex-wrap gap-2">
                             @foreach($teamMembers as $member)
-                                <option value="{{ $member->nama }}" {{ in_array($member->nama, $selectedPics) ? 'selected' : '' }}>{{ $member->nama }}</option>
+                                <label class="cursor-pointer relative">
+                                    <input type="checkbox" name="pic[]" value="{{ $member->nama }}" class="peer sr-only" 
+                                        {{ (is_array($project->pic) && in_array($member->nama, $project->pic)) ? 'checked' : '' }}>
+                                    <div class="px-3 py-1.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-medium transition-all peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 hover:bg-slate-50">
+                                        {{ $member->nama }}
+                                    </div>
+                                </label>
                             @endforeach
-                        </select>
-                        <p class="text-[10px] text-slate-500 mt-1">Tahan Ctrl/Cmd untuk memilih lebih dari satu.</p>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Status Project</label>
@@ -81,10 +85,6 @@
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Sudah Berapa Persen Beres? (%)</label>
                         <input type="number" name="progress" min="0" max="100" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" value="{{ $project->progress ?? 0 }}">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Kontak Klien (Nama/No. HP)</label>
-                        <input type="text" name="contact_client" value="{{ $project->contact_client }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-slate-700 mb-1">Lagi Ngerjain Tahap Apa Sekarang?</label>
