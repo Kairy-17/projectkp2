@@ -112,19 +112,19 @@
                         <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Informasi Tambahan</h3>
                         <div class="space-y-4">
                             <div>
-                                <span class="block text-xs font-medium text-slate-500">Milestone Saat Ini</span>
+                                <span class="block text-xs font-medium text-slate-500">Lagi Ngerjain Tahap Apa Sekarang?</span>
                                 <p class="text-sm text-slate-800 mt-0.5 bg-slate-50 p-2 rounded border border-slate-100">{{ $project->milestone_saat_ini ?? '-' }}</p>
                             </div>
                             <div>
-                                <span class="block text-xs font-medium text-slate-500">Next Action</span>
+                                <span class="block text-xs font-medium text-slate-500">Habis Ini Mau Ngapain? (Langkah Selanjutnya)</span>
                                 <p class="text-sm text-slate-800 mt-0.5 bg-slate-50 p-2 rounded border border-slate-100">{{ $project->next_action ?? '-' }}</p>
                             </div>
                             <div>
-                                <span class="block text-xs font-medium text-slate-500">Kendala / Issue</span>
+                                <span class="block text-xs font-medium text-slate-500">Kendala atau Hambatan</span>
                                 <p class="text-sm text-red-600 mt-0.5 bg-red-50 p-2 rounded border border-red-100">{{ $project->kendala_issue ?? '-' }}</p>
                             </div>
                             <div>
-                                <span class="block text-xs font-medium text-slate-500">Contact Client</span>
+                                <span class="block text-xs font-medium text-slate-500">Kontak Klien</span>
                                 <p class="text-sm text-slate-800 mt-0.5 bg-slate-50 p-2 rounded border border-slate-100">{{ $project->contact_client ?? '-' }}</p>
                             </div>
                         </div>
