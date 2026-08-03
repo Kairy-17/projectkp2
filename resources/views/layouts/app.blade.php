@@ -11,6 +11,7 @@
     <link rel="apple-touch-icon" href="{{ asset('icons/icon-192x192.png') }}">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.4/+esm"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -30,13 +31,17 @@
             0% { opacity: 0; transform: translateY(100%); }
             100% { opacity: 1; transform: translateY(0); }
         }
+        .turbo-progress-bar {
+            height: 4px;
+            background-color: #4f46e5;
+        }
     </style>
     @stack('styles')
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-indigo-100 selection:text-indigo-900 h-screen overflow-hidden">
     
     <!-- Splash Screen Heboh -->
-    <div x-data="{ 
+    <div id="splash-screen" data-turbo-permanent x-data="{ 
             showSplash: !sessionStorage.getItem('splashShown'),
             phase1: false,
             phase2: false,
