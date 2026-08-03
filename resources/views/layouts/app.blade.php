@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProTrack - Project Management</title>
-    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234f46e5'/><text x='50%' y='50%' font-family='Arial, sans-serif' font-size='65' font-weight='bold' fill='white' dominant-baseline='central' text-anchor='middle'>P</text></svg>">
     <!-- PWA Setup -->
     <meta name="theme-color" content="#4f46e5">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
