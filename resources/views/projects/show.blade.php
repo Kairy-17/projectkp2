@@ -123,10 +123,6 @@
                                 <span class="block text-xs font-medium text-slate-500">Kendala atau Hambatan</span>
                                 <p class="text-sm text-red-600 mt-0.5 bg-red-50 p-2 rounded border border-red-100">{{ $project->kendala_issue ?? '-' }}</p>
                             </div>
-                            <div>
-                                <span class="block text-xs font-medium text-slate-500">Kontak Klien</span>
-                                <p class="text-sm text-slate-800 mt-0.5 bg-slate-50 p-2 rounded border border-slate-100">{{ $project->contact_client ?? '-' }}</p>
-                            </div>
                         </div>
                     </div>
                 </div>
