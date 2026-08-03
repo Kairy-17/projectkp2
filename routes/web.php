@@ -8,8 +8,8 @@ use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\ReportPinController;
 
 Route::get('/', function () {
-    return redirect()->route('projects.index');
-});
+    return view('dashboard');
+})->name('dashboard');
 Route::resource('projects', ProjectController::class);
 Route::resource('team-members', TeamMemberController::class)->except(['show']);
 

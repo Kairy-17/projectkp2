@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="flex gap-3">
-                    <a href="{{ route('projects.index') }}" class="flex-1 px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded-xl font-semibold transition-colors">Kembali</a>
+                    <a href="{{ route('dashboard') }}" class="flex-1 px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded-xl font-semibold transition-colors">Kembali</a>
                     <button type="submit" class="flex-1 px-4 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-500/30 transition-all">Buka Brankas</button>
                 </div>
             </form>
