@@ -27,13 +27,17 @@
                         <textarea name="deskripsi_singkat" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"></textarea>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">PIC (Tim Terlibat)</label>
-                        <select name="pic[]" multiple class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white h-24">
+                        <label class="block text-sm font-medium text-slate-700 mb-2">PIC (Tim Terlibat)</label>
+                        <div class="flex flex-wrap gap-2">
                             @foreach($teamMembers as $member)
-                                <option value="{{ $member->nama }}">{{ $member->nama }}</option>
+                                <label class="cursor-pointer relative">
+                                    <input type="checkbox" name="pic[]" value="{{ $member->nama }}" class="peer sr-only">
+                                    <div class="px-3 py-1.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-medium transition-all peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 hover:bg-slate-50">
+                                        {{ $member->nama }}
+                                    </div>
+                                </label>
                             @endforeach
-                        </select>
-                        <p class="text-[10px] text-slate-500 mt-1">Tahan tombol Ctrl (Windows) / Cmd (Mac) untuk memilih lebih dari satu.</p>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Status Project</label>
