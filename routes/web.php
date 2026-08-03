@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\ReportPinController;
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', function () {
+    return redirect()->route('projects.index');
+});
 Route::resource('projects', ProjectController::class);
 Route::resource('team-members', TeamMemberController::class)->except(['show']);
 
