@@ -9,6 +9,9 @@
     <meta name="theme-color" content="#4f46e5">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ asset('icons/icon-192x192.png') }}">
+    
+    <!-- Turbo Configuration -->
+    <meta name="turbo-cache-control" content="no-cache">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.4/+esm"></script>
