@@ -112,15 +112,15 @@
                         <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Informasi Tambahan</h3>
                         <div class="space-y-4">
                             <div>
-                                <span class="block text-xs font-medium text-slate-500">Lagi Ngerjain Tahap Apa Sekarang?</span>
+                                <span class="block text-xs font-medium text-slate-500">Tahap Saat Ini (Milestone)</span>
                                 <p class="text-sm text-slate-800 mt-0.5 bg-slate-50 p-2 rounded border border-slate-100">{{ $project->milestone_saat_ini ?? '-' }}</p>
                             </div>
                             <div>
-                                <span class="block text-xs font-medium text-slate-500">Habis Ini Mau Ngapain? (Langkah Selanjutnya)</span>
+                                <span class="block text-xs font-medium text-slate-500">Tindakan Selanjutnya (Next Action)</span>
                                 <p class="text-sm text-slate-800 mt-0.5 bg-slate-50 p-2 rounded border border-slate-100">{{ $project->next_action ?? '-' }}</p>
                             </div>
                             <div>
-                                <span class="block text-xs font-medium text-slate-500">Kendala atau Hambatan</span>
+                                <span class="block text-xs font-medium text-slate-500">Kendala / Hambatan</span>
                                 <p class="text-sm text-red-600 mt-0.5 bg-red-50 p-2 rounded border border-red-100">{{ $project->kendala_issue ?? '-' }}</p>
                             </div>
                         </div>
