@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use App\Models\Industri;
+use App\Models\JenisPerusahaan;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -15,7 +17,9 @@ class ReportController extends Controller
 
     public function create()
     {
-        return view('reports.create');
+        $industris = Industri::orderBy('nama')->get();
+        $jenisPerusahaans = JenisPerusahaan::orderBy('nama')->get();
+        return view('reports.create', compact('industris', 'jenisPerusahaans'));
     }
 
     public function store(Request $request)
@@ -26,7 +30,9 @@ class ReportController extends Controller
 
     public function edit(Report $report)
     {
-        return view('reports.edit', compact('report'));
+        $industris = Industri::orderBy('nama')->get();
+        $jenisPerusahaans = JenisPerusahaan::orderBy('nama')->get();
+        return view('reports.edit', compact('report', 'industris', 'jenisPerusahaans'));
     }
 
     public function update(Request $request, Report $report)
