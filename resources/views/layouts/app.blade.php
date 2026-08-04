@@ -12,24 +12,25 @@
     
     <!-- Turbo Configuration -->
     <meta name="turbo-cache-control" content="no-cache">
+    <meta name="turbo-prefetch" content="true">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Scripts and Fonts -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.4/+esm"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
-                    colors: { primary: '#4f46e5', secondary: '#1e293b' }
-                }
-            }
-        }
-    </script>
+    
+    <!-- Compiled Tailwind and App Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.4); }
+        
+        /* Custom Scrollbar for Windows */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.5); }
+        
         @keyframes slideUpFade {
             0% { opacity: 0; transform: translateY(100%); }
             100% { opacity: 1; transform: translateY(0); }
@@ -50,12 +51,12 @@
             phase2: false,
             init() {
                 if(this.showSplash) {
-                    setTimeout(() => { this.phase1 = true; }, 1800); // Logo zoom in and fade out
-                    setTimeout(() => { this.phase2 = true; }, 2000); // Layers start sliding up
+                    setTimeout(() => { this.phase1 = true; }, 1200); // Logo zoom in and fade out
+                    setTimeout(() => { this.phase2 = true; }, 1500); // Layers start sliding up
                     setTimeout(() => {
                         this.showSplash = false;
                         sessionStorage.setItem('splashShown', 'true');
-                    }, 2800); // Fully hide from DOM
+                    }, 2000); // Fully hide from DOM
                 }
             }
          }" 
@@ -115,47 +116,14 @@
     </div>
 
     <!-- Page Load Animation Wrapper -->
-        <div x-data="{ sidebarOpen: false }" class="flex h-full w-full">
-        <!-- Sidebar -->
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 w-64 glass shadow-xl transition-transform duration-300 md:static md:translate-x-0 flex flex-col border-r border-slate-200">
-            <div class="p-6 flex items-center justify-between border-b border-slate-100">
-                <div class="flex items-center gap-3">
-                    <div class="bg-indigo-600 rounded-xl w-8 h-8 flex items-center justify-center shadow-lg shadow-indigo-200">
-                        <span class="font-black text-white text-lg">P</span>
-                    </div>
-                    <h1 class="text-xl font-bold text-slate-800 tracking-tight">ProTrack<span class="text-indigo-600">.</span></h1>
-                </div>
-                <button @click="sidebarOpen = false" class="md:hidden text-slate-400 hover:text-slate-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-slate-600 rounded-xl hover:bg-slate-50 hover:text-indigo-600 transition-all font-medium {{ request()->routeIs('dashboard') ? 'bg-indigo-50/50 text-indigo-700' : '' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                    Dashboard
-                </a>
-                <a href="{{ route('projects.index') }}" class="flex items-center gap-3 px-4 py-3 text-slate-600 rounded-xl hover:bg-slate-50 hover:text-indigo-600 transition-all font-medium {{ request()->routeIs('projects.*') ? 'bg-indigo-50/50 text-indigo-700' : '' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    Projects
-                </a>
-                <a href="{{ route('team-members.index') }}" class="flex items-center gap-3 px-4 py-3 text-slate-600 rounded-xl hover:bg-slate-50 hover:text-indigo-600 transition-all font-medium {{ request()->routeIs('team-members.*') ? 'bg-indigo-50/50 text-indigo-700' : '' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    Kelola Tim
-                </a>
-                <a href="{{ route('report.pin.show') }}" class="flex items-center gap-3 px-4 py-3 text-slate-600 rounded-xl hover:bg-slate-50 hover:text-indigo-600 transition-all font-medium {{ request()->is('report*') ? 'bg-indigo-50/50 text-indigo-700' : '' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    Reports
-                </a>
-
-                <div class="pt-6 pb-2">
-                    <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Pengaturan</p>
-                </div>
-                <a href="{{ route('master-data.index') }}" class="flex items-center gap-3 px-4 py-3 text-slate-600 rounded-xl hover:bg-slate-50 hover:text-indigo-600 transition-all font-medium {{ request()->routeIs('master-data.*') ? 'bg-indigo-50/50 text-indigo-700' : '' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
-                    Master Data
-                </a>
-            </nav>
-        </aside>
+    <div x-data="{ loaded: false }" 
+         x-init="setTimeout(() => loaded = true, 50)" 
+         x-show="loaded" 
+         x-transition:enter="transition-all ease-out duration-700" 
+         x-transition:enter-start="opacity-0 translate-y-4 scale-[0.99]" 
+         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+         style="display: none;"
+         class="flex h-full w-full">
         @yield('content')
     </div>
     

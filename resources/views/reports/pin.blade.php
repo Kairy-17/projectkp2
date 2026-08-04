@@ -8,7 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        body { font-family: 'Outfit', sans-serif; }
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: #0f172a; /* bg-slate-900 pre-load */
+        }
     </style>
 </head>
 <body class="bg-slate-900 min-h-screen flex items-center justify-center p-4">
@@ -31,10 +34,12 @@
                 <p class="text-slate-300 text-sm">Masukkan PIN keamanan untuk melihat data finansial dan laporan kinerja.</p>
             </div>
 
-            <form action="{{ route('report.pin.verify') }}" method="POST" class="space-y-6">
+            <form x-data="{ pin: '' }" x-ref="form" action="{{ route('report.pin.verify') }}" method="POST" class="space-y-6" @input="if(pin.length === 6) $refs.form.requestSubmit()">
                 @csrf
                 <div>
                     <input type="password" name="pin" 
+                           x-model="pin"
+                           maxlength="6"
                            class="w-full bg-slate-800/50 border border-slate-600 rounded-xl px-4 py-3 text-center text-2xl tracking-[0.5em] text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all placeholder:text-slate-500 placeholder:tracking-normal" 
                            placeholder="••••••"
                            autocomplete="off"
@@ -49,9 +54,8 @@
                     @enderror
                 </div>
 
-                <div class="flex gap-3">
-                    <a href="{{ route('dashboard') }}" class="flex-1 px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded-xl font-semibold transition-colors">Kembali</a>
-                    <button type="submit" class="flex-1 px-4 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-500/30 transition-all">Buka Brankas</button>
+                <div class="flex gap-3 mt-6">
+                    <a href="{{ route('dashboard') }}" class="w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded-xl font-semibold transition-colors">Kembali</a>
                 </div>
             </form>
         </div>

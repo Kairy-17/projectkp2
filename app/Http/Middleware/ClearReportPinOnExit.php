@@ -15,7 +15,7 @@ class ClearReportPinOnExit
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->is('report*')) {
+        if (!$request->is('report*') && !$request->routeIs('master-data.*')) {
             session()->forget('report_pin_verified');
         }
         

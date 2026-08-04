@@ -92,7 +92,7 @@
                         }
                     }">
                         <label class="block text-sm font-medium text-slate-700 mb-1 flex justify-between items-center">
-                            Jenis Perusahaan / Layanan
+                            Jenis Perusahaan
                             <button type="button" @click="addNew()" class="text-xs text-indigo-600 hover:text-indigo-800 flex items-center font-semibold">
                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                                 Tambah Cepat
@@ -100,6 +100,43 @@
                         </label>
                         <select name="jenis_perusahaan" x-model="selected" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
                             <option value="">-- Pilih Jenis Perusahaan --</option>
+                            <template x-for="opt in options" :key="opt.id">
+                                <option :value="opt.nama" x-text="opt.nama"></option>
+                            </template>
+                        </select>
+                    </div>
+                    <div x-data="{
+                        options: {{ json_encode($layanans) }},
+                        selected: '{{ $report->layanan }}',
+                        async addNew() {
+                            let nama = prompt('Masukkan nama Layanan baru:');
+                            if(nama) {
+                                let res = await fetch('{{ route('master-data.layanan.store') }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Accept': 'application/json'
+                                    },
+                                    body: JSON.stringify({nama: nama})
+                                });
+                                if(res.ok) {
+                                    let data = await res.json();
+                                    this.options.push(data);
+                                    this.selected = data.nama;
+                                }
+                            }
+                        }
+                    }">
+                        <label class="block text-sm font-medium text-slate-700 mb-1 flex justify-between items-center">
+                            Layanan
+                            <button type="button" @click="addNew()" class="text-xs text-indigo-600 hover:text-indigo-800 flex items-center font-semibold">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                Tambah Cepat
+                            </button>
+                        </label>
+                        <select name="layanan" x-model="selected" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                            <option value="">-- Pilih Layanan --</option>
                             <template x-for="opt in options" :key="opt.id">
                                 <option :value="opt.nama" x-text="opt.nama"></option>
                             </template>

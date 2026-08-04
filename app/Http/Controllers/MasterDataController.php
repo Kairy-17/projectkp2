@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Industri;
 use App\Models\JenisPerusahaan;
+use App\Models\Layanan;
 use Illuminate\Http\Request;
 
 class MasterDataController extends Controller
@@ -12,7 +13,8 @@ class MasterDataController extends Controller
     {
         $industris = Industri::orderBy('nama')->get();
         $jenisPerusahaans = JenisPerusahaan::orderBy('nama')->get();
-        return view('master_data.index', compact('industris', 'jenisPerusahaans'));
+        $layanans = Layanan::orderBy('nama')->get();
+        return view('master_data.index', compact('industris', 'jenisPerusahaans', 'layanans'));
     }
 
     public function storeIndustri(Request $request)
@@ -49,5 +51,23 @@ class MasterDataController extends Controller
     {
         $jenisPerusahaan->delete();
         return back()->with('success', 'Jenis Perusahaan berhasil dihapus');
+    }
+
+    public function storeLayanan(Request $request)
+    {
+        $request->validate(['nama' => 'required|string|max:255']);
+        $layanan = Layanan::firstOrCreate(['nama' => $request->nama]);
+        
+        if ($request->wantsJson()) {
+            return response()->json($layanan);
+        }
+        
+        return back()->with('success', 'Layanan berhasil ditambahkan');
+    }
+
+    public function destroyLayanan(Layanan $layanan)
+    {
+        $layanan->delete();
+        return back()->with('success', 'Layanan berhasil dihapus');
     }
 }

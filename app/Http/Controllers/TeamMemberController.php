@@ -9,6 +9,7 @@ class TeamMemberController extends Controller
 {
     public function index()
     {
+        session()->forget('report_pin_verified');
         $members = TeamMember::orderBy('nama')->get();
         return view('team_members.index', compact('members'));
     }

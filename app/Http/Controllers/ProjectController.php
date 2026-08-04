@@ -10,6 +10,7 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
+        session()->forget('report_pin_verified');
         if ($request->has('tahun') || $request->has('bulan') || $request->has('minggu')) {
             session([
                 'filter_tahun' => $request->tahun,
