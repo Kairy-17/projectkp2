@@ -76,7 +76,8 @@
                             <td class="px-6 py-4 font-medium text-slate-700">Rp {{ number_format($report->nilai_proyek, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 font-medium text-blue-600">Rp {{ number_format($report->real_income, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 text-emerald-600 font-bold">{{ number_format($report->margin_persen, 1) }}%</td>
-                            <td class="px-6 py-4 text-right">
+                            <td class="px-6 py-4 text-right flex justify-end gap-2">
+                                <a href="{{ route('reports.attachments.index', $report->id) }}" class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-all">Dokumen ({{ $report->attachments->count() }})</a>
                                 <a href="{{ route('reports.edit', $report->id) }}" class="inline-flex items-center px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-all">Detail / Edit</a>
                             </td>
                         </tr>
@@ -107,6 +108,10 @@
                         <p class="text-[10px] text-blue-500 uppercase">Real Income</p>
                         <p class="font-medium text-blue-700">Rp {{ number_format($report->real_income/1000000, 1, ',', '.') }} Juta</p>
                     </div>
+                </div>
+                <div class="mt-3 flex gap-2">
+                    <a href="{{ route('reports.attachments.index', $report->id) }}" class="flex-1 text-center py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors rounded text-xs font-bold">Dokumen ({{ $report->attachments->count() }})</a>
+                    <a href="{{ route('reports.edit', $report->id) }}" class="flex-1 text-center py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors rounded text-xs font-bold">Detail / Edit</a>
                 </div>
             </div>
             @empty

@@ -95,6 +95,29 @@
                     </div>
                 </div>
 
+                <!-- Custom Dropdown Status -->
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $status ?? '' }}', label: '{{ $status ?? 'Semua Status' }}' }">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Status</label>
+                    <input type="hidden" name="status" x-model="selected">
+                    <button type="button" @click="open = !open" @click.away="open = false" 
+                            class="w-full sm:w-40 flex items-center justify-between bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400 group">
+                        <span x-text="label" class="text-slate-700 group-hover:text-indigo-700 transition-colors"></span>
+                        <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 group-hover:text-indigo-500" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" x-cloak 
+                         class="absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden py-1">
+                        <div @click="selected = ''; label = 'Semua Status'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                             class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Semua Status</div>
+                        
+                        @foreach(['Not yet', 'On going', 'Hold', 'Done'] as $s)
+                            <div @click="selected = '{{ $s }}'; label = '{{ $s }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                                 class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                                 :class="selected === '{{ $s }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ $s }}</div>
+                        @endforeach
+                    </div>
+                </div>
+
             </form>
         </div>
 

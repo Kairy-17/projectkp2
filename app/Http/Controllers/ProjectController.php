@@ -11,17 +11,19 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         session()->forget('report_pin_verified');
-        if ($request->has('tahun') || $request->has('bulan') || $request->has('minggu')) {
+        if ($request->has('tahun') || $request->has('bulan') || $request->has('minggu') || $request->has('status')) {
             session([
                 'filter_tahun' => $request->tahun,
                 'filter_bulan' => $request->bulan,
                 'filter_minggu' => $request->minggu,
+                'filter_status' => $request->status,
             ]);
         }
 
         $tahun = session('filter_tahun');
         $bulan = session('filter_bulan');
         $minggu = session('filter_minggu');
+        $status = session('filter_status');
 
         $query = Project::query();
 
@@ -34,9 +36,12 @@ class ProjectController extends Controller
         if ($minggu) {
             $query->where('minggu', $minggu);
         }
+        if ($status) {
+            $query->where('status_project', $status);
+        }
 
         $projects = $query->orderBy('created_at', 'desc')->get();
-        return view('projects.index', compact('projects', 'tahun', 'bulan', 'minggu'));
+        return view('projects.index', compact('projects', 'tahun', 'bulan', 'minggu', 'status'));
     }
 
     public function create()

@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Report extends Model
+class ReportAttachment extends Model
 {
     protected $guarded = [];
 
-    public function attachments()
+    public function report()
     {
-        return $this->hasMany(ReportAttachment::class);
+        return $this->belongsTo(Report::class);
     }
 }

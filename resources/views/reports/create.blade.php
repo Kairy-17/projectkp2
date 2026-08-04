@@ -13,7 +13,12 @@
         <div class="max-w-3xl mx-auto glass p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
             <form action="{{ route('reports.store') }}" method="POST" class="space-y-6">
                 @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" x-data="{
+                    nilai_proyek: 0,
+                    cost_proyek: 0,
+                    get real_income() { return this.nilai_proyek - this.cost_proyek; },
+                    get margin_persen() { return this.nilai_proyek > 0 ? (this.real_income / this.nilai_proyek * 100).toFixed(1) : 0; }
+                }">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Tahun</label>
                         <input type="number" name="tahun" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all" placeholder="Contoh: 2026" required>
@@ -135,23 +140,35 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Nilai Proyek (Rp)</label>
-                        <input type="number" name="nilai_proyek" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <input type="number" name="nilai_proyek" x-model.number="nilai_proyek" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Cost Proyek (Rp)</label>
+                        <input type="number" name="cost_proyek" x-model.number="cost_proyek" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Real Income (Rp)</label>
-                        <input type="number" name="real_income" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <input type="number" name="real_income" :value="real_income" readonly class="w-full rounded-lg border-slate-300 border px-4 py-2 bg-slate-50 text-slate-500 cursor-not-allowed outline-none transition-all">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Margin (%)</label>
-                        <input type="number" step="0.1" name="margin_persen" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <input type="number" step="0.1" name="margin_persen" :value="margin_persen" readonly class="w-full rounded-lg border-slate-300 border px-4 py-2 bg-slate-50 text-slate-500 cursor-not-allowed outline-none transition-all">
                     </div>
-                    <div>
+                    <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-slate-700 mb-1">Keterlibatan Puti (%)</label>
                         <input type="number" step="0.1" name="keterlibatan_puti_persen" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Masalah yang diselesaikan</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Masalah yang akan diselesaikan</label>
                         <textarea name="masalah_yang_diselesaikan" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Evaluasi</label>
+                        <textarea name="evaluasi" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Impact</label>
+                        <textarea name="impact" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"></textarea>
                     </div>
                 </div>
                 <div class="pt-4 flex justify-end gap-3 border-t border-slate-100 mt-6">

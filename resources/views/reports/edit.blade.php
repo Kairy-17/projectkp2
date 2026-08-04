@@ -22,7 +22,12 @@
             <form action="{{ route('reports.update', $report->id) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" x-data="{
+                    nilai_proyek: {{ $report->nilai_proyek ?? 0 }},
+                    cost_proyek: {{ $report->cost_proyek ?? 0 }},
+                    get real_income() { return this.nilai_proyek - this.cost_proyek; },
+                    get margin_persen() { return this.nilai_proyek > 0 ? (this.real_income / this.nilai_proyek * 100).toFixed(1) : 0; }
+                }">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Tahun</label>
                         <input type="number" name="tahun" value="{{ $report->tahun }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all" required>
@@ -144,30 +149,41 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Nilai Proyek (Rp)</label>
-                        <input type="number" name="nilai_proyek" value="{{ $report->nilai_proyek }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <input type="number" name="nilai_proyek" x-model.number="nilai_proyek" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Cost Proyek (Rp)</label>
+                        <input type="number" name="cost_proyek" x-model.number="cost_proyek" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Real Income (Rp)</label>
-                        <input type="number" name="real_income" value="{{ $report->real_income }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <input type="number" name="real_income" :value="real_income" readonly class="w-full rounded-lg border-slate-300 border px-4 py-2 bg-slate-50 text-slate-500 cursor-not-allowed outline-none transition-all">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Margin (%)</label>
-                        <input type="number" step="0.1" name="margin_persen" value="{{ $report->margin_persen }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <input type="number" step="0.1" name="margin_persen" :value="margin_persen" readonly class="w-full rounded-lg border-slate-300 border px-4 py-2 bg-slate-50 text-slate-500 cursor-not-allowed outline-none transition-all">
                     </div>
-                    <div>
+                    <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-slate-700 mb-1">Keterlibatan Puti (%)</label>
                         <input type="number" step="0.1" name="keterlibatan_puti_persen" value="{{ $report->keterlibatan_puti_persen }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Masalah yang diselesaikan</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Masalah yang akan diselesaikan</label>
                         <textarea name="masalah_yang_diselesaikan" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">{{ $report->masalah_yang_diselesaikan }}</textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Evaluasi</label>
+                        <textarea name="evaluasi" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">{{ $report->evaluasi }}</textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Impact</label>
+                        <textarea name="impact" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">{{ $report->impact }}</textarea>
                     </div>
                 </div>
                 <div class="pt-4 flex justify-end gap-3 border-t border-slate-100 mt-6">
                     <a href="{{ route('reports.index') }}" class="px-5 py-2.5 border border-slate-300 rounded-xl text-slate-700 font-medium hover:bg-slate-50 transition-colors">Batal</a>
                     <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl shadow-sm shadow-emerald-200 transition-colors">Simpan Perubahan</button>
                 </div>
-            </form>
         </div>
     </div>
 </main>
