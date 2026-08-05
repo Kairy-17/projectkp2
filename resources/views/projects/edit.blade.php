@@ -7,13 +7,13 @@
             <a href="{{ route('projects.index') }}" class="text-slate-500 hover:text-indigo-600 mr-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             </a>
-            <h2 class="text-xl font-semibold">Edit Project: {{ $project->project_id }}</h2>
+            <h2 class="text-xl font-semibold">{{ __('Edit Project') }}: {{ $project->project_id }}</h2>
         </div>
         
         <form action="{{ route('projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus project ini?');">
             @csrf
             @method('DELETE')
-            <button type="submit" class="text-red-500 hover:text-red-700 font-medium text-sm px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors">Hapus Project</button>
+            <button type="submit" class="text-red-500 hover:text-red-700 font-medium text-sm px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors">{{ __('Hapus Project') }}</button>
         </form>
     </header>
 
@@ -24,19 +24,19 @@
                 @method('PUT')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Project ID</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Project ID') }}</label>
                         <input type="text" name="project_id" value="{{ $project->project_id }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" required>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Nama Project</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Nama Project') }}</label>
                         <input type="text" name="nama_project" value="{{ $project->nama_project }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" required>
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi Singkat</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Deskripsi Singkat') }}</label>
                         <textarea name="deskripsi_singkat" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">{{ $project->deskripsi_singkat }}</textarea>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-2">PIC (Tim Terlibat)</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">{{ __('PIC') }}</label>
                         <div class="flex flex-wrap gap-2">
                             @foreach($teamMembers as $member)
                                 <label class="cursor-pointer relative">
@@ -50,59 +50,59 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Status Project</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Status Project') }}</label>
                         <select name="status_project" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white">
-                            <option value="Not yet" {{ $project->status_project == 'Not yet' ? 'selected' : '' }}>Not yet</option>
-                            <option value="On going" {{ $project->status_project == 'On going' ? 'selected' : '' }}>On going</option>
-                            <option value="Hold" {{ $project->status_project == 'Hold' ? 'selected' : '' }}>Hold</option>
-                            <option value="Done" {{ $project->status_project == 'Done' ? 'selected' : '' }}>Done</option>
+                            <option value="Not yet" {{ $project->status_project == 'Not yet' ? 'selected' : '' }}>{{ __('Not yet') }}</option>
+                            <option value="On going" {{ $project->status_project == 'On going' ? 'selected' : '' }}>{{ __('On going') }}</option>
+                            <option value="Hold" {{ $project->status_project == 'Hold' ? 'selected' : '' }}>{{ __('Hold') }}</option>
+                            <option value="Done" {{ $project->status_project == 'Done' ? 'selected' : '' }}>{{ __('Done') }}</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Priority</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Priority') }}</label>
                         <select name="priority" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white">
-                            <option value="Low" {{ $project->priority == 'Low' ? 'selected' : '' }}>Low</option>
-                            <option value="Medium" {{ $project->priority == 'Medium' ? 'selected' : '' }}>Medium</option>
-                            <option value="High" {{ $project->priority == 'High' ? 'selected' : '' }}>High</option>
+                            <option value="Low" {{ $project->priority == 'Low' ? 'selected' : '' }}>{{ __('Low') }}</option>
+                            <option value="Medium" {{ $project->priority == 'Medium' ? 'selected' : '' }}>{{ __('Medium') }}</option>
+                            <option value="High" {{ $project->priority == 'High' ? 'selected' : '' }}>{{ __('High') }}</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Durasi Project</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Durasi Project') }}</label>
                         <input type="text" name="durasi_project" value="{{ $project->durasi_project }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Mulai</label>
-                        <input type="date" name="tanggal_mulai" value="{{ $project->tanggal_mulai }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Tanggal Mulai') }}</label>
+                        <input type="text" x-data x-init="flatpickr($el, { altInput: true, altFormat: 'd/m/Y', dateFormat: 'Y-m-d' })" name="tanggal_mulai" value="{{ $project->tanggal_mulai }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white cursor-pointer" placeholder="{{ __('hh/bb/tttt') }}">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Target Selesai (Due Date)</label>
-                        <input type="date" name="target_selesai" value="{{ $project->target_selesai }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Target Selesai') }}</label>
+                        <input type="text" x-data x-init="flatpickr($el, { altInput: true, altFormat: 'd/m/Y', dateFormat: 'Y-m-d' })" name="target_selesai" value="{{ $project->target_selesai }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white cursor-pointer" placeholder="{{ __('hh/bb/tttt') }}">
                     </div>
                 </div>
 
-                <h3 class="font-semibold text-lg text-slate-800 mb-4 mt-8 pb-2 border-b border-slate-100">Informasi Tambahan & Progress</h3>
+                <h3 class="font-semibold text-lg text-slate-800 mb-4 mt-8 pb-2 border-b border-slate-100">{{ __('Informasi Tambahan & Progress') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Persentase Progress (%)</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Persentase Progress (%)') }}</label>
                         <input type="number" name="progress" min="0" max="100" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" value="{{ $project->progress ?? 0 }}">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Tahap Saat Ini (Milestone)</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Tahap Saat Ini') }}</label>
                         <input type="text" name="milestone_saat_ini" value="{{ $project->milestone_saat_ini }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Tindakan Selanjutnya (Next Action)</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Tindakan Selanjutnya') }}</label>
                         <input type="text" name="next_action" value="{{ $project->next_action }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Kendala / Hambatan</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Kendala / Hambatan') }}</label>
                         <textarea name="kendala_issue" rows="2" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">{{ $project->kendala_issue }}</textarea>
                     </div>
                 </div>
 
                 <div class="pt-4 flex justify-end gap-3 border-t border-slate-100 mt-6">
-                    <a href="{{ route('projects.index') }}" class="px-5 py-2.5 border border-slate-300 rounded-xl text-slate-700 font-medium hover:bg-slate-50 transition-colors">Batal</a>
-                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-sm shadow-indigo-200 transition-colors">Simpan Perubahan</button>
+                    <a href="{{ route('projects.index') }}" class="px-5 py-2.5 border border-slate-300 rounded-xl text-slate-700 font-medium hover:bg-slate-50 transition-colors">{{ __('Batal') }}</a>
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-sm shadow-indigo-200 transition-colors">{{ __('Simpan Perubahan') }}</button>
                 </div>
             </form>
         </div>

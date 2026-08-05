@@ -67,9 +67,14 @@
                         <div class="flex flex-wrap gap-2">
                             @if(is_array($project->pic) && count($project->pic) > 0)
                                 @foreach($project->pic as $p)
-                                    <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg">
-                                        <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold">{{ substr($p, 0, 1) }}</div>
-                                        <span class="font-medium text-slate-700 text-sm">{{ $p }}</span>
+                                    @php
+                                        $memberColorData = $teamMembersData[$p] ?? null;
+                                        $bg = $memberColorData->warna_bg ?? '#e0e7ff';
+                                        $text = $memberColorData->warna_text ?? '#4f46e5';
+                                    @endphp
+                                    <div class="flex items-center gap-2 bg-white border px-3 py-1.5 rounded-lg shadow-sm" style="border-color: {{ $bg }}">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style="background-color: {{ $bg }}; color: {{ $text }};">{{ substr($p, 0, 1) }}</div>
+                                        <span class="font-bold text-sm" style="color: {{ $text }};">{{ $p }}</span>
                                     </div>
                                 @endforeach
                             @else

@@ -41,7 +41,8 @@ class ProjectController extends Controller
         }
 
         $projects = $query->orderBy('created_at', 'desc')->get();
-        return view('projects.index', compact('projects', 'tahun', 'bulan', 'minggu', 'status'));
+        $teamMembersData = TeamMember::get()->keyBy('nama');
+        return view('projects.index', compact('projects', 'tahun', 'bulan', 'minggu', 'status', 'teamMembersData'));
     }
 
     public function create()
@@ -68,7 +69,8 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        return view('projects.show', compact('project'));
+        $teamMembersData = TeamMember::get()->keyBy('nama');
+        return view('projects.show', compact('project', 'teamMembersData'));
     }
 
     public function edit(Project $project)

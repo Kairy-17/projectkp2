@@ -22,6 +22,11 @@
                 <h3 class="font-semibold text-lg mb-4 text-slate-800">Tambah Anggota Baru</h3>
                 <form action="{{ route('team-members.store') }}" method="POST" class="flex gap-3">
                     @csrf
+                    @php
+                        $randomColors = ['#dc2626', '#ea580c', '#d97706', '#ca8a04', '#65a30d', '#16a34a', '#059669', '#0d9488', '#0891b2', '#0284c7', '#2563eb', '#4f46e5', '#7c3aed', '#9333ea', '#c026d3', '#db2777', '#e11d48'];
+                        $defaultColor = $randomColors[array_rand($randomColors)];
+                    @endphp
+                    <input type="color" name="warna" value="{{ $defaultColor }}" class="h-[42px] w-[42px] p-0.5 rounded-lg border-slate-300 border bg-white cursor-pointer shrink-0" title="Pilih Warna Profil">
                     <input type="text" name="nama" class="flex-1 rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Masukkan nama panggilan (misal: Budi)" required>
                     <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-sm shadow-indigo-200 transition-colors">Tambah</button>
                 </form>
@@ -44,7 +49,7 @@
                         <tr class="hover:bg-slate-50 transition-colors">
                             <td class="px-6 py-4 font-medium text-slate-800">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">{{ substr($member->nama, 0, 1) }}</div>
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: {{ $member->warna_bg ?? '#e0e7ff' }}; color: {{ $member->warna_text ?? '#4f46e5' }};">{{ substr($member->nama, 0, 1) }}</div>
                                     {{ $member->nama }}
                                 </div>
                             </td>

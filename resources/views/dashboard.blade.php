@@ -1,18 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+    }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+</style>
 <main class="flex-1 flex flex-col h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-indigo-50/30">
     <div class="flex-1 overflow-y-auto p-6 md:p-12 flex flex-col items-center justify-center">
         
-        <div class="text-center mb-12">
-            <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-3xl mx-auto mb-6 shadow-lg shadow-indigo-200">P</div>
+        <div class="text-center mb-12 animate-fade-in-up">
+            <img src="{{ asset('icons/logo-new.png') }}" alt="ProTrack Logo" class="h-24 w-auto object-contain mx-auto mb-6 drop-shadow-md">
             <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-2">{{ __('Welcome to ProTrack') }}</h1>
-            <p class="text-slate-500">{{ __('Pilih modul yang ingin Anda buka hari ini.') }}</p>
+            <p class="text-slate-500">{{ __('Akses fitur ProTrack untuk mengelola proyek dan menganalisis kinerja.') }}</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
             <!-- Project Reminder Module -->
-            <a href="{{ route('projects.index') }}" class="glass p-8 md:p-10 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden border border-slate-200/60">
+            <a href="{{ route('projects.index') }}" class="animate-fade-in-up delay-100 glass p-8 md:p-10 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden border border-slate-200/60">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-100 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10">
                     <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6">
@@ -27,7 +40,7 @@
             </a>
 
             <!-- Report Module -->
-            <a href="{{ route('reports.index') }}" class="glass p-8 md:p-10 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden border border-slate-200/60">
+            <a href="{{ route('reports.index') }}" class="animate-fade-in-up delay-200 glass p-8 md:p-10 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden border border-slate-200/60">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-100 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10">
                     <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">

@@ -1,7 +1,7 @@
 <!-- Sidebar (Desktop) -->
 <aside class="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col z-10">
     <div class="h-16 flex items-center px-6 border-b border-slate-100">
-        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3">P</div>
+        <img src="{{ asset('icons/logo-new.png') }}" alt="ProTrack Logo" class="h-8 w-auto object-contain mr-2">
         <h1 class="font-bold text-lg tracking-tight">ProTrack.</h1>
     </div>
     <nav class="flex-1 px-4 py-6 space-y-2">

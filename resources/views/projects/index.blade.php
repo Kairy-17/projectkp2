@@ -142,9 +142,13 @@
         @endphp
 
         <!-- Table Section (Desktop) -->
-        <div class="glass rounded-2xl shadow-sm border border-slate-200 overflow-hidden hidden md:block">
+        <div class="glass rounded-2xl shadow-sm border border-slate-200 overflow-hidden hidden md:block" x-data="{ search: '' }">
             <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-white/50">
                 <h3 class="font-semibold text-lg">{{ __('Active Reminders') }}</h3>
+                <div class="relative w-64">
+                    <input type="text" x-model="search" placeholder="{{ __('Cari nama project...') }}" class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all bg-white">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm whitespace-nowrap">
@@ -160,7 +164,7 @@
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white/40">
                         @forelse($projects as $project)
-                        <tr class="hover:bg-white/80 transition-colors group">
+                        <tr class="hover:bg-white/80 transition-colors group" x-show="search === '' || {{ json_encode(strtolower($project->nama_project)) }}.includes(search.toLowerCase())">
                             <td class="px-6 py-4">
                                 <span class="font-bold text-slate-800 block">{{ $project->nama_project }} ({{ $project->project_id }})</span>
                                 <div class="text-xs text-slate-500 mt-0.5">{{ $project->durasi_project ?? '-' }}</div>
@@ -169,7 +173,12 @@
                                 <div class="flex flex-wrap gap-1">
                                     @if(is_array($project->pic))
                                         @foreach($project->pic as $p)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-700">{{ $p }}</span>
+                                            @php
+                                                $memberColorData = $teamMembersData[$p] ?? null;
+                                                $bg = $memberColorData->warna_bg ?? '#f1f5f9';
+                                                $text = $memberColorData->warna_text ?? '#334155';
+                                            @endphp
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border" style="background-color: {{ $bg }}; color: {{ $text }}; border-color: {{ $bg }};">{{ $p }}</span>
                                         @endforeach
                                     @else
                                         <span class="text-slate-500">-</span>
@@ -201,9 +210,13 @@
         </div>
 
         <!-- Mobile View (Cards) -->
-        <div class="md:hidden space-y-4 pb-20">
+        <div class="md:hidden space-y-4 pb-20" x-data="{ search: '' }">
+            <div class="relative w-full mb-4">
+                <input type="text" x-model="search" placeholder="{{ __('Cari nama project...') }}" class="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all bg-white shadow-sm">
+                <svg class="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
             @forelse($projects as $project)
-            <div class="glass p-4 rounded-xl relative border border-slate-100">
+            <div class="glass p-4 rounded-xl relative border border-slate-100" x-show="search === '' || {{ json_encode(strtolower($project->nama_project)) }}.includes(search.toLowerCase())">
                 <div class="absolute top-4 right-4 flex flex-col gap-1 items-end">
                     <span class="px-2 py-1 {{ getPriorityColor($project->priority) }} text-[10px] font-bold rounded uppercase border">{{ __($project->priority) }}</span>
                     <span class="px-2 py-1 {{ getStatusColor($project->status_project) }} text-[10px] font-bold rounded border">{{ __($project->status_project) }}</span>
@@ -214,7 +227,12 @@
                     <div class="flex flex-wrap gap-1">
                         @if(is_array($project->pic))
                             @foreach($project->pic as $p)
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700">{{ $p }}</span>
+                                @php
+                                    $memberColorData = $teamMembersData[$p] ?? null;
+                                    $bg = $memberColorData->warna_bg ?? '#f1f5f9';
+                                    $text = $memberColorData->warna_text ?? '#334155';
+                                @endphp
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border" style="background-color: {{ $bg }}; color: {{ $text }}; border-color: {{ $bg }};">{{ $p }}</span>
                             @endforeach
                         @endif
                     </div>
