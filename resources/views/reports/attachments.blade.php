@@ -13,7 +13,7 @@
 
     <div class="flex-1 overflow-y-auto p-4 sm:p-6 md:p-12">
         <!-- Brankas Dokumen Section -->
-        <div class="max-w-4xl mx-auto glass p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200" x-data="{ tab: 'file', search: '' }">
+        <div class="max-w-4xl mx-auto glass p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200" x-data="{ tab: 'file', search: '', previewModal: false, previewUrl: '', previewType: '', previewTitle: '' }">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                     <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
@@ -101,8 +101,16 @@
                     </div>
                     <div class="flex items-center gap-2 flex-shrink-0 ml-4">
                         @if($attachment->tipe == 'file')
-                            <a href="{{ Storage::url($attachment->path_atau_url) }}" target="_blank" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="Buka File">
+                            @php
+                                $ext = strtolower(pathinfo($attachment->path_atau_url, PATHINFO_EXTENSION));
+                                $isOffice = in_array($ext, ['doc', 'docx', 'xls', 'xlsx']);
+                                $fileUrl = asset(Storage::url($attachment->path_atau_url));
+                            @endphp
+                            <button type="button" @click="previewUrl = '{{ $isOffice ? 'https://docs.google.com/gview?url=' . urlencode($fileUrl) . '&embedded=true' : $fileUrl }}'; previewType = '{{ $isOffice ? 'office' : 'native' }}'; previewTitle = '{{ addslashes($attachment->judul_dokumen) }}'; previewModal = true" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="{{ __('Preview File') }}">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            </button>
+                            <a href="{{ Storage::url($attachment->path_atau_url) }}" download class="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="{{ __('Download File') }}">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                             </a>
                         @else
                             <a href="{{ $attachment->path_atau_url }}" target="_blank" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="Buka Tautan">
@@ -125,6 +133,25 @@
                     <p class="text-sm text-slate-500 font-medium">Brankas kosong. Belum ada dokumen yang disimpan.</p>
                 </div>
                 @endforelse
+            </div>
+
+            <!-- Preview Modal -->
+            <div x-show="previewModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4" x-cloak>
+                <div @click.away="previewModal = false" class="bg-white rounded-2xl shadow-xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden transform transition-all">
+                    <!-- Modal Header -->
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50">
+                        <h3 class="font-bold text-slate-800 text-lg truncate pr-4" x-text="previewTitle"></h3>
+                        <button @click="previewModal = false" class="text-slate-400 hover:text-slate-700 bg-white hover:bg-slate-200 p-2 rounded-full transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="flex-1 bg-slate-100 p-2 relative">
+                        <template x-if="previewUrl">
+                            <iframe :src="previewUrl" class="w-full h-full rounded-xl shadow-inner border border-slate-200 bg-white" frameborder="0"></iframe>
+                        </template>
+                    </div>
+                </div>
             </div>
         </div>
 

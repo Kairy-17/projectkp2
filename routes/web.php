@@ -14,6 +14,14 @@ Route::get('/', function () {
     session()->forget('report_pin_verified');
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        session(['locale' => $locale]);
+    }
+    return back();
+})->name('lang.switch');
+
 Route::resource('projects', ProjectController::class);
 Route::resource('team-members', TeamMemberController::class);
 

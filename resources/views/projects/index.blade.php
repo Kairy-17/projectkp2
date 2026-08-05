@@ -11,15 +11,15 @@
             <button class="md:hidden p-2 text-slate-500">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
-            <h2 class="text-xl font-semibold hidden sm:block">Project Reminder</h2>
+            <h2 class="text-xl font-semibold hidden sm:block">{{ __('Project Reminder') }}</h2>
         </div>
         <div class="flex items-center gap-3">
             @include('partials.notifications')
             <a href="{{ route('team-members.index') }}" class="bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 px-4 py-2 rounded-full text-sm font-medium shadow-sm transition-all hidden sm:flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                Kelola Tim
+                {{ __('Kelola Tim') }}
             </a>
-            <a href="{{ route('projects.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm shadow-indigo-200 transition-all">+ New Project</a>
+            <a href="{{ route('projects.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm shadow-indigo-200 transition-all">{{ __('+ New Project') }}</a>
         </div>
     </header>
 
@@ -30,8 +30,8 @@
             <form action="{{ route('projects.index') }}" method="GET" class="w-full flex flex-col sm:flex-row gap-4 items-end" x-ref="filterForm">
                 
                 <!-- Custom Dropdown Tahun -->
-                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $tahun ?: '' }}', label: '{{ $tahun ?: 'Semua' }}' }">
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Tahun</label>
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $tahun ?: '' }}', label: '{{ $tahun ?: __('Semua') }}' }">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">{{ __('Tahun') }}</label>
                     <input type="hidden" name="tahun" x-model="selected">
                     <button type="button" @click="open = !open" @click.away="open = false" 
                             class="w-full sm:w-36 flex items-center justify-between bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400 group">
@@ -40,9 +40,9 @@
                     </button>
                     <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" x-cloak 
                          class="absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden py-1">
-                        <div @click="selected = ''; label = 'Semua'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                        <div @click="selected = ''; label = '{{ __('Semua') }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
                              class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Semua</div>
+                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ __('Semua') }}</div>
                         @for($y = date('Y') - 2; $y <= date('Y') + 2; $y++)
                             <div @click="selected = '{{ $y }}'; label = '{{ $y }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
                                  class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
@@ -52,8 +52,8 @@
                 </div>
 
                 <!-- Custom Dropdown Bulan -->
-                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $bulan ?: '' }}', label: '{{ $bulan ? date('F', mktime(0, 0, 0, $bulan, 10)) : 'Semua' }}' }">
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Bulan</label>
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $bulan ?: '' }}', label: '{{ $bulan ? __(date('F', mktime(0, 0, 0, $bulan, 10))) : __('Semua') }}' }">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">{{ __('Bulan') }}</label>
                     <input type="hidden" name="bulan" x-model="selected">
                     <button type="button" @click="open = !open" @click.away="open = false" 
                             class="w-full sm:w-40 flex items-center justify-between bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400 group">
@@ -62,20 +62,20 @@
                     </button>
                     <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" x-cloak 
                          class="absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden py-1 max-h-64 overflow-y-auto">
-                        <div @click="selected = ''; label = 'Semua'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                        <div @click="selected = ''; label = '{{ __('Semua') }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
                              class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Semua</div>
+                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ __('Semua') }}</div>
                         @for($m = 1; $m <= 12; $m++)
-                            <div @click="selected = '{{ $m }}'; label = '{{ date('F', mktime(0, 0, 0, $m, 10)) }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                            <div @click="selected = '{{ $m }}'; label = '{{ __(date('F', mktime(0, 0, 0, $m, 10))) }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
                                  class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                                 :class="selected === '{{ $m }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ date('F', mktime(0, 0, 0, $m, 10)) }}</div>
+                                 :class="selected === '{{ $m }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ __(date('F', mktime(0, 0, 0, $m, 10))) }}</div>
                         @endfor
                     </div>
                 </div>
 
                 <!-- Custom Dropdown Minggu -->
-                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $minggu ?: '' }}', label: '{{ $minggu ? 'Minggu ke-'.$minggu : 'Semua' }}' }">
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Minggu</label>
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $minggu ?: '' }}', label: '{{ $minggu ? __('Minggu ke-').$minggu : __('Semua') }}' }">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">{{ __('Minggu') }}</label>
                     <input type="hidden" name="minggu" x-model="selected">
                     <button type="button" @click="open = !open" @click.away="open = false" 
                             class="w-full sm:w-40 flex items-center justify-between bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400 group">
@@ -84,20 +84,20 @@
                     </button>
                     <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" x-cloak 
                          class="absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden py-1">
-                        <div @click="selected = ''; label = 'Semua'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                        <div @click="selected = ''; label = '{{ __('Semua') }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
                              class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Semua</div>
+                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ __('Semua') }}</div>
                         @for($w = 1; $w <= 5; $w++)
-                            <div @click="selected = '{{ $w }}'; label = 'Minggu ke-{{ $w }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                            <div @click="selected = '{{ $w }}'; label = '{{ __('Minggu ke-') }}{{ $w }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
                                  class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                                 :class="selected === '{{ $w }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Minggu ke-{{ $w }}</div>
+                                 :class="selected === '{{ $w }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ __('Minggu ke-') }}{{ $w }}</div>
                         @endfor
                     </div>
                 </div>
 
                 <!-- Custom Dropdown Status -->
-                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $status ?? '' }}', label: '{{ $status ?? 'Semua Status' }}' }">
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Status</label>
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $status ?? '' }}', label: '{{ $status ?? __('Semua Status') }}' }">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">{{ __('Status') }}</label>
                     <input type="hidden" name="status" x-model="selected">
                     <button type="button" @click="open = !open" @click.away="open = false" 
                             class="w-full sm:w-40 flex items-center justify-between bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400 group">
@@ -106,14 +106,14 @@
                     </button>
                     <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" x-cloak 
                          class="absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden py-1">
-                        <div @click="selected = ''; label = 'Semua Status'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                        <div @click="selected = ''; label = '{{ __('Semua Status') }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
                              class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">Semua Status</div>
+                             :class="selected === '' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ __('Semua Status') }}</div>
                         
                         @foreach(['Not yet', 'On going', 'Hold', 'Done'] as $s)
-                            <div @click="selected = '{{ $s }}'; label = '{{ $s }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
+                            <div @click="selected = '{{ $s }}'; label = '{{ __($s) }}'; open = false; setTimeout(() => $el.closest('form').submit(), 50)" 
                                  class="px-4 py-2.5 text-sm cursor-pointer hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                                 :class="selected === '{{ $s }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ $s }}</div>
+                                 :class="selected === '{{ $s }}' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600'">{{ __($s) }}</div>
                         @endforeach
                     </div>
                 </div>
@@ -144,18 +144,18 @@
         <!-- Table Section (Desktop) -->
         <div class="glass rounded-2xl shadow-sm border border-slate-200 overflow-hidden hidden md:block">
             <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-white/50">
-                <h3 class="font-semibold text-lg">Active Reminders</h3>
+                <h3 class="font-semibold text-lg">{{ __('Active Reminders') }}</h3>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm whitespace-nowrap">
                     <thead class="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider">
                         <tr>
-                            <th class="px-6 py-4 font-semibold">Project</th>
-                            <th class="px-6 py-4 font-semibold">PIC (Tim Terlibat)</th>
-                            <th class="px-6 py-4 font-semibold">Status</th>
-                            <th class="px-6 py-4 font-semibold">Priority</th>
-                            <th class="px-6 py-4 font-semibold">Target</th>
-                            <th class="px-6 py-4 text-right font-semibold">Action</th>
+                            <th class="px-6 py-4 font-semibold">{{ __('Project') }}</th>
+                            <th class="px-6 py-4 font-semibold">{{ __('PIC (Tim Terlibat)') }}</th>
+                            <th class="px-6 py-4 font-semibold">{{ __('Status') }}</th>
+                            <th class="px-6 py-4 font-semibold">{{ __('Priority') }}</th>
+                            <th class="px-6 py-4 font-semibold">{{ __('Target') }}</th>
+                            <th class="px-6 py-4 text-right font-semibold">{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white/40">
@@ -177,22 +177,22 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getStatusColor($project->status_project) }}">{{ $project->status_project }}</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getStatusColor($project->status_project) }}">{{ __($project->status_project) }}</span>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getPriorityColor($project->priority) }}">{{ $project->priority }}</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getPriorityColor($project->priority) }}">{{ __($project->priority) }}</span>
                             </td>
                             <td class="px-6 py-4 text-slate-600 font-medium">{{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                                    <a href="{{ route('projects.show', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg text-xs font-bold">Detail</a>
-                                    <a href="{{ route('projects.edit', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-bold">Edit</a>
+                                    <a href="{{ route('projects.show', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg text-xs font-bold">{{ __('Detail') }}</a>
+                                    <a href="{{ route('projects.edit', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-bold">{{ __('Edit') }}</a>
                                 </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-8 text-center text-slate-500">Belum ada data project.</td>
+                            <td colspan="6" class="px-6 py-8 text-center text-slate-500">{{ __('Belum ada data project.') }}</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -205,11 +205,11 @@
             @forelse($projects as $project)
             <div class="glass p-4 rounded-xl relative border border-slate-100">
                 <div class="absolute top-4 right-4 flex flex-col gap-1 items-end">
-                    <span class="px-2 py-1 {{ getPriorityColor($project->priority) }} text-[10px] font-bold rounded uppercase border">{{ $project->priority }}</span>
-                    <span class="px-2 py-1 {{ getStatusColor($project->status_project) }} text-[10px] font-bold rounded border">{{ $project->status_project }}</span>
+                    <span class="px-2 py-1 {{ getPriorityColor($project->priority) }} text-[10px] font-bold rounded uppercase border">{{ __($project->priority) }}</span>
+                    <span class="px-2 py-1 {{ getStatusColor($project->status_project) }} text-[10px] font-bold rounded border">{{ __($project->status_project) }}</span>
                 </div>
                 <a href="{{ route('projects.show', $project->id) }}" class="font-bold text-lg mb-1 pr-20 text-indigo-700 block">{{ $project->nama_project }} ({{ $project->project_id }})</a>
-                <p class="text-xs text-slate-500 mb-3">Target: {{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</p>
+                <p class="text-xs text-slate-500 mb-3">{{ __('Target:') }} {{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</p>
                 <div class="flex items-center justify-between mt-4">
                     <div class="flex flex-wrap gap-1">
                         @if(is_array($project->pic))
@@ -221,7 +221,7 @@
                 </div>
             </div>
             @empty
-            <div class="glass p-4 rounded-xl text-center text-slate-500">Belum ada data project.</div>
+            <div class="glass p-4 rounded-xl text-center text-slate-500">{{ __('Belum ada data project.') }}</div>
             @endforelse
         </div>
 
@@ -232,15 +232,15 @@
 <nav class="md:hidden fixed bottom-0 w-full glass border-t border-slate-200 flex justify-around p-3 pb-safe z-50">
     <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-1 text-slate-400">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-        <span class="text-[10px] font-medium">Kembali</span>
+        <span class="text-[10px] font-medium">{{ __('Kembali') }}</span>
     </a>
     <a href="{{ route('projects.index') }}" class="flex flex-col items-center gap-1 text-indigo-600">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-        <span class="text-[10px] font-medium">Projects</span>
+        <span class="text-[10px] font-medium">{{ __('Projects') }}</span>
     </a>
     <a href="{{ route('team-members.index') }}" class="flex flex-col items-center gap-1 text-slate-400">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-        <span class="text-[10px] font-medium">Team</span>
+        <span class="text-[10px] font-medium">{{ __('Team') }}</span>
     </a>
 </nav>
 @endsection
