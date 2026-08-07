@@ -15,6 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Default Admin User
+        User::factory()->create([
+            'name' => 'Admin ProTrack',
+            'email' => 'admin@protrack.com',
+            'password' => bcrypt('admin123'),
+        ]);
+
         $members = ['puti', 'marlis', 'adel', 'indah', 'puji', 'joko', 'desi', 'criana', 'adam', 'ilham', 'zaky', 'fandy', 'salsa'];
         foreach($members as $member) {
             \App\Models\TeamMember::create(['nama' => ucfirst($member)]);

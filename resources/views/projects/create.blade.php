@@ -16,22 +16,25 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Project ID') }}</label>
-                        <input type="text" name="project_id" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="{{ __('Contoh: GAP') }}" required>
+                        <input type="text" name="project_id" value="{{ old('project_id') }}" oninput="this.value = this.value.toUpperCase()" class="uppercase w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all @error('project_id') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" placeholder="{{ __('Contoh: GAP') }}" required>
+                        @error('project_id')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Nama Project') }}</label>
-                        <input type="text" name="nama_project" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" required>
+                        <input type="text" name="nama_project" value="{{ old('nama_project') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" required>
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Deskripsi Singkat') }}</label>
-                        <textarea name="deskripsi_singkat" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"></textarea>
+                        <textarea name="deskripsi_singkat" rows="3" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">{{ old('deskripsi_singkat') }}</textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-2">{{ __('PIC') }}</label>
                         <div class="flex flex-wrap gap-2">
                             @foreach($teamMembers as $member)
                                 <label class="cursor-pointer relative">
-                                    <input type="checkbox" name="pic[]" value="{{ $member->nama }}" class="peer sr-only">
+                                    <input type="checkbox" name="pic[]" value="{{ $member->nama }}" class="peer sr-only" {{ in_array($member->nama, old('pic', [])) ? 'checked' : '' }}>
                                     <div class="px-3 py-1.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-medium transition-all peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 hover:bg-slate-50">
                                         {{ $member->nama }}
                                     </div>
@@ -42,31 +45,31 @@
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Status Project') }}</label>
                         <select name="status_project" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white">
-                            <option value="Not yet">{{ __('Not yet') }}</option>
-                            <option value="On going">{{ __('On going') }}</option>
-                            <option value="Hold">{{ __('Hold') }}</option>
-                            <option value="Done">{{ __('Done') }}</option>
+                            <option value="Not yet" {{ old('status_project') == 'Not yet' ? 'selected' : '' }}>{{ __('Not yet') }}</option>
+                            <option value="On going" {{ old('status_project') == 'On going' ? 'selected' : '' }}>{{ __('On going') }}</option>
+                            <option value="Hold" {{ old('status_project') == 'Hold' ? 'selected' : '' }}>{{ __('Hold') }}</option>
+                            <option value="Done" {{ old('status_project') == 'Done' ? 'selected' : '' }}>{{ __('Done') }}</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Priority') }}</label>
                         <select name="priority" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white">
-                            <option value="Low">{{ __('Low') }}</option>
-                            <option value="Medium" selected>{{ __('Medium') }}</option>
-                            <option value="High">{{ __('High') }}</option>
+                            <option value="Low" {{ old('priority') == 'Low' ? 'selected' : '' }}>{{ __('Low') }}</option>
+                            <option value="Medium" {{ old('priority', 'Medium') == 'Medium' ? 'selected' : '' }}>{{ __('Medium') }}</option>
+                            <option value="High" {{ old('priority') == 'High' ? 'selected' : '' }}>{{ __('High') }}</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Durasi Project') }}</label>
-                        <input type="text" name="durasi_project" placeholder="{{ __('Contoh: 3 bulan') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                        <input type="text" name="durasi_project" value="{{ old('durasi_project') }}" placeholder="{{ __('Contoh: 3 bulan') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Tanggal Mulai') }}</label>
-                        <input type="text" x-data x-init="flatpickr($el, { altInput: true, altFormat: 'd/m/Y', dateFormat: 'Y-m-d' })" name="tanggal_mulai" placeholder="{{ __('hh/bb/tttt') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white cursor-pointer">
+                        <input type="text" value="{{ old('tanggal_mulai') }}" x-data x-init="flatpickr($el, { altInput: true, altFormat: 'd/m/Y', dateFormat: 'Y-m-d' })" name="tanggal_mulai" placeholder="{{ __('hh/bb/tttt') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white cursor-pointer">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Target Selesai') }}</label>
-                        <input type="text" x-data x-init="flatpickr($el, { altInput: true, altFormat: 'd/m/Y', dateFormat: 'Y-m-d' })" name="target_selesai" placeholder="{{ __('hh/bb/tttt') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white cursor-pointer">
+                        <input type="text" value="{{ old('target_selesai') }}" x-data x-init="flatpickr($el, { altInput: true, altFormat: 'd/m/Y', dateFormat: 'Y-m-d' })" name="target_selesai" placeholder="{{ __('hh/bb/tttt') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white cursor-pointer">
                     </div>
                 </div>
 
@@ -74,19 +77,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Persentase Progress (%)') }}</label>
-                        <input type="number" name="progress" min="0" max="100" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" value="0">
+                        <input type="number" name="progress" min="0" max="100" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" value="{{ old('progress', 0) }}">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Tahap Saat Ini') }}</label>
-                        <input type="text" name="milestone_saat_ini" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                        <input type="text" name="milestone_saat_ini" value="{{ old('milestone_saat_ini') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Tindakan Selanjutnya') }}</label>
-                        <input type="text" name="next_action" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                        <input type="text" name="next_action" value="{{ old('next_action') }}" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-slate-700 mb-1">{{ __('Kendala / Hambatan') }}</label>
-                        <textarea name="kendala_issue" rows="2" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"></textarea>
+                        <textarea name="kendala_issue" rows="2" class="w-full rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">{{ old('kendala_issue') }}</textarea>
                     </div>
                 </div>
 

@@ -53,15 +53,41 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->has('project_id')) {
+            $request->merge(['project_id' => strtoupper($request->project_id)]);
+        }
+
+        // Ambil tanggal dari input user, jika kosong gunakan waktu saat ini
+        if ($request->has('tanggal_mulai') && !empty($request->tanggal_mulai)) {
+            $date = \Carbon\Carbon::parse($request->tanggal_mulai);
+        } else {
+            $date = now();
+        }
+
+        $tahun = $date->year;
+        $bulan = $date->month;
+        $minggu = ceil($date->day / 7);
+
+        $request->validate([
+            'project_id' => [
+                'required',
+                \Illuminate\Validation\Rule::unique('projects')->where(function ($query) use ($tahun, $minggu) {
+                    return $query->where('tahun', $tahun)
+                                 ->where('minggu', $minggu);
+                })
+            ],
+        ], [
+            'project_id.unique' => 'Project ID ini sudah digunakan pada minggu ini. Silakan gunakan ID lain atau buat di minggu depan.'
+        ]);
+
         $data = $request->all();
         if(!isset($data['pic'])) {
             $data['pic'] = [];
         }
         
-        $now = now();
-        $data['tahun'] = $now->year;
-        $data['bulan'] = $now->month;
-        $data['minggu'] = ceil($now->day / 7);
+        $data['tahun'] = $tahun;
+        $data['bulan'] = $bulan;
+        $data['minggu'] = $minggu;
 
         Project::create($data);
         return redirect()->route('projects.index')->with('success', 'Project berhasil ditambahkan.');
