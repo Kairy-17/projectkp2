@@ -90,6 +90,15 @@ class ProjectController extends Controller
         $data['minggu'] = $minggu;
 
         Project::create($data);
+
+        // Update filter session agar user langsung melihat proyek yang baru dibuat
+        session([
+            'filter_tahun' => $tahun,
+            'filter_bulan' => $bulan,
+            'filter_minggu' => $minggu,
+            'filter_status' => '',
+        ]);
+
         return redirect()->route('projects.index')->with('success', 'Project berhasil ditambahkan.');
     }
 
