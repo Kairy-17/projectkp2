@@ -46,18 +46,20 @@
 
         <div class="w-full max-w-md anim-fade-up delay-100">
             <div class="glass p-8 md:p-10 rounded-3xl shadow-xl relative overflow-hidden">
-                <!-- Decorative dot -->
-                <div class="absolute top-8 right-8 w-3 h-3 bg-indigo-500 rounded-full animate-pulse"></div>
+                <div class="flex justify-between items-start mb-8 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-800 mb-2 flex items-center flex-wrap gap-2">
+                            {{ __('Selamat Datang 👋') }}
+                            <span class="w-3 h-3 bg-indigo-500 rounded-full animate-pulse block shrink-0"></span>
+                        </h2>
+                        <p class="text-slate-500 text-sm">{{ __('Silakan masuk ke akun Anda untuk melanjutkan.') }}</p>
+                    </div>
 
-                <!-- Language Switcher (Moved inside card for safety) -->
-                <div class="absolute top-6 right-6 md:right-8 flex items-center bg-slate-100/70 rounded-lg p-1 shadow-inner border border-slate-200 z-50">
-                    <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">ID</a>
-                    <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">EN</a>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-slate-800 mb-2">{{ __('Selamat Datang 👋') }}</h2>
-                    <p class="text-slate-500 text-sm">{{ __('Silakan masuk ke akun Anda untuk melanjutkan.') }}</p>
+                    <!-- Language Switcher -->
+                    <div class="flex items-center bg-slate-100/70 rounded-lg p-1 shadow-inner border border-slate-200 shrink-0 mt-1">
+                        <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">ID</a>
+                        <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">EN</a>
+                    </div>
                 </div>
 
                 @if ($errors->any())

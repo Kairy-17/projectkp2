@@ -46,15 +46,16 @@
         </div>
     </header>
 
-    <div class="flex-1 overflow-y-auto p-6 md:p-12 flex flex-col items-center justify-center relative">
+    <div class="flex-1 overflow-y-auto p-6 md:p-12 flex flex-col items-center relative">
         
-        <div class="text-center mb-12 animate-fade-in-up">
-            <img src="{{ asset('icons/logo-new.png') }}" alt="ProTrack Logo" class="h-24 w-auto object-contain mx-auto mb-6 drop-shadow-md">
-            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-2">{{ __('Welcome to ProTrack') }}</h1>
-            <p class="text-slate-500">{{ __('Akses fitur ProTrack untuk mengelola proyek dan menganalisis kinerja.') }}</p>
-        </div>
+        <div class="my-auto w-full max-w-4xl flex flex-col items-center py-4">
+            <div class="text-center mb-12 animate-fade-in-up">
+                <img src="{{ asset('icons/logo-new.png') }}" alt="ProTrack Logo" class="h-24 w-auto object-contain mx-auto mb-6 drop-shadow-md">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-2">{{ __('Welcome to ProTrack') }}</h1>
+                <p class="text-slate-500">{{ __('Akses fitur ProTrack untuk mengelola proyek dan menganalisis kinerja.') }}</p>
+            </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
             <!-- Project Reminder Module -->
             <a href="{{ route('projects.index') }}" class="animate-fade-in-up delay-100 glass p-8 md:p-10 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden border border-slate-200/60">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-100 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
@@ -84,6 +85,7 @@
                     </div>
                 </div>
             </a>
+            </div>
         </div>
     </div>
 </main>
