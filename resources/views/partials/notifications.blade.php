@@ -9,7 +9,7 @@
     </button>
 
     <div x-show="open" x-cloak style="display: none;" 
-         class="absolute right-0 z-50 mt-2 w-80 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
+         class="fixed inset-x-4 top-16 sm:absolute sm:inset-auto sm:right-0 z-50 sm:mt-2 sm:w-80 origin-top sm:origin-top-right rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
         <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
             <h3 class="text-sm font-semibold text-slate-800">Notifikasi Deadline</h3>
             @if($deadline_notifications->count() > 0)

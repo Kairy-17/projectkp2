@@ -20,15 +20,17 @@
             <!-- Add New Form -->
             <div class="mb-8 p-4 bg-white rounded-xl border border-slate-100 shadow-sm">
                 <h3 class="font-semibold text-lg mb-4 text-slate-800">Tambah Anggota Baru</h3>
-                <form action="{{ route('team-members.store') }}" method="POST" class="flex gap-3">
+                <form action="{{ route('team-members.store') }}" method="POST" class="flex flex-col sm:flex-row gap-3">
                     @csrf
                     @php
                         $randomColors = ['#dc2626', '#ea580c', '#d97706', '#ca8a04', '#65a30d', '#16a34a', '#059669', '#0d9488', '#0891b2', '#0284c7', '#2563eb', '#4f46e5', '#7c3aed', '#9333ea', '#c026d3', '#db2777', '#e11d48'];
                         $defaultColor = $randomColors[array_rand($randomColors)];
                     @endphp
-                    <input type="color" name="warna" value="{{ $defaultColor }}" class="h-[42px] w-[42px] p-0.5 rounded-lg border-slate-300 border bg-white cursor-pointer shrink-0" title="Pilih Warna Profil">
-                    <input type="text" name="nama" class="flex-1 rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Masukkan nama panggilan (misal: Budi)" required>
-                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-sm shadow-indigo-200 transition-colors">Tambah</button>
+                    <div class="flex gap-3 flex-1">
+                        <input type="color" name="warna" value="{{ $defaultColor }}" class="h-[42px] w-[42px] p-0.5 rounded-lg border-slate-300 border bg-white cursor-pointer shrink-0" title="Pilih Warna Profil">
+                        <input type="text" name="nama" class="flex-1 w-full min-w-0 rounded-lg border-slate-300 border px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Nama panggilan..." required>
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-sm shadow-indigo-200 transition-colors shrink-0">Tambah</button>
                 </form>
                 @error('nama')
                     <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
@@ -36,8 +38,9 @@
             </div>
 
             <!-- List Members -->
-            <div class="bg-white rounded-xl border border-slate-100 overflow-hidden">
-                <table class="w-full text-left text-sm whitespace-nowrap">
+            <div class="bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
                     <thead class="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider">
                         <tr>
                             <th class="px-6 py-4 font-semibold">Nama Anggota</th>
@@ -68,6 +71,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                </div>
             </div>
 
         </div>
