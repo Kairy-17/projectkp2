@@ -27,6 +27,7 @@
     <!-- Compiled Tailwind and App Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        [x-cloak] { display: none !important; }
         body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.4); }
         
