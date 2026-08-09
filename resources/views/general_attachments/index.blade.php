@@ -37,7 +37,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <div class="flex border-b border-slate-200 mb-4">
+                <div class="flex border-b border-slate-200 mb-4 overflow-x-auto whitespace-nowrap hide-scrollbar">
                     <button type="button" @click="tab = 'file'" :class="tab == 'file' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-slate-500'" class="px-4 py-2 border-b-2 font-medium text-sm transition-colors">{{ __('Upload File (PDF/Word/Dll)') }}</button>
                     <button type="button" @click="tab = 'link'" :class="tab == 'link' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-slate-500'" class="px-4 py-2 border-b-2 font-medium text-sm transition-colors">{{ __('Simpan Link') }}</button>
                 </div>
