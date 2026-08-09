@@ -14,7 +14,7 @@
     .delay-200 { animation-delay: 200ms; }
     .delay-300 { animation-delay: 300ms; }
 </style>
-<main class="flex-1 flex flex-col h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-indigo-50/30">
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-gradient-to-br from-slate-50 to-indigo-50/30">
     <!-- Header with Logout -->
     <header class="w-full px-6 py-4 flex justify-between items-center glass border-b border-white/40 z-10 shrink-0">
         <div class="flex items-center gap-3">

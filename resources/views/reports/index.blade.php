@@ -4,7 +4,7 @@
 @include('partials.sidebar')
 
 <!-- Main Content -->
-<main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50/50">
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50/50">
     <!-- Topbar -->
     <header class="h-16 glass flex items-center justify-between px-4 sm:px-6 z-40 sticky top-0">
         <div class="flex items-center gap-3">

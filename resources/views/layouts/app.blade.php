@@ -54,7 +54,7 @@
     </style>
     @stack('styles')
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-indigo-100 selection:text-indigo-900 h-screen overflow-hidden">
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-indigo-100 selection:text-indigo-900 h-[100dvh] overflow-hidden">
     
     <!-- Splash Screen Heboh -->
     <div id="splash-screen" data-turbo-permanent x-data="{ 
@@ -139,6 +139,16 @@
                     });
             });
         }
+
+        // Fix iOS Safari viewport stuck after keyboard dismiss
+        document.addEventListener('focusout', function(e) {
+            if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                setTimeout(function() {
+                    window.scrollTo(0, 0);
+                    document.body.scrollTop = 0;
+                }, 100);
+            }
+        });
     </script>
     @stack('scripts')
 </body>

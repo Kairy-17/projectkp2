@@ -3,7 +3,7 @@
 @section('content')
 @include('partials.sidebar')
 
-<main class="flex-1 flex flex-col h-screen overflow-y-auto bg-slate-50">
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-slate-50">
     <div class="p-6 max-w-6xl mx-auto w-full">
             <header class="mb-8 flex items-center justify-between">
                 <div>

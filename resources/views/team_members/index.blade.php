@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50">
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50">
     <header class="h-16 glass flex items-center justify-between px-6 z-10 sticky top-0 border-b border-slate-200">
         <div class="flex items-center">
             <a href="{{ route('projects.index') }}" class="text-slate-500 hover:text-indigo-600 mr-4">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50">
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50">
     <header class="h-16 glass flex items-center px-6 z-10 sticky top-0 border-b border-slate-200 justify-between">
         <div class="flex items-center">
             <a href="{{ route('reports.index') }}" class="text-slate-500 hover:text-indigo-600 mr-4" title="{{ __('Kembali ke Laporan') }}">
