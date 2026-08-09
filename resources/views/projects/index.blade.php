@@ -96,7 +96,7 @@
                 </div>
 
                 <!-- Custom Dropdown Status -->
-                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $status ?? '' }}', label: '{{ $status ?? __('Semua Status') }}' }">
+                <div class="w-full sm:w-auto relative" x-data="{ open: false, selected: '{{ $status ?? '' }}', label: '{{ $status ? __($status) : __('Semua Status') }}' }">
                     <label class="block text-xs font-medium text-slate-500 mb-1">{{ __('Status') }}</label>
                     <input type="hidden" name="status" x-model="selected">
                     <button type="button" @click="open = !open" @click.away="open = false" 
