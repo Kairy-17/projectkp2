@@ -86,5 +86,15 @@
     "Simpan Project": "Save Project",
     "Contoh: GAP": "Example: GAP",
     "Contoh: 3 bulan": "Example: 3 months",
-    "hh/bb/tttt": "dd/mm/yyyy"
+    "hh/bb/tttt": "dd/mm/yyyy",
+    "Selamat Datang 👋": "Welcome 👋",
+    "Silakan masuk ke akun Anda untuk melanjutkan.": "Please log in to your account to continue.",
+    "Kata Sandi": "Password",
+    "Masuk ke Dashboard": "Login to Dashboard",
+    "Perangkat ini dikenali sebagai:": "This device is recognized as:",
+    "(Ubah / Hapus?)": "(Change / Remove?)",
+    "Siapa Anda? (Set Nama Perangkat)": "Who are you? (Set Device Name)",
+    "Masukkan nama Anda untuk perangkat ini (Kosongkan jika ingin menghapus memori):": "Enter your name for this device (Leave blank to clear memory):",
+    "Selamat datang,": "Welcome,",
+    "Logout": "Logout"
 }

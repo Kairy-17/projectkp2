@@ -18,21 +18,32 @@
     <!-- Header with Logout -->
     <header class="w-full px-6 py-4 flex justify-between items-center glass border-b border-white/40 z-10 shrink-0">
         <div class="flex items-center gap-3">
+            @php
+                $userName = request()->cookie('protrack_user_name') ?: 'Tim ProTrack';
+            @endphp
             <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg shadow-inner">
-                {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
+                {{ substr($userName, 0, 1) }}
             </div>
             <div>
-                <p class="text-sm text-slate-500 font-medium leading-tight">Halo,</p>
-                <p class="text-slate-800 font-semibold">{{ auth()->user()->name ?? 'Admin' }}</p>
+                <p class="text-sm text-slate-500 font-medium leading-tight">{{ __('Selamat datang,') }}</p>
+                <p class="text-slate-800 font-semibold">{{ $userName }}</p>
             </div>
         </div>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                Logout
-            </button>
-        </form>
+        <div class="flex items-center gap-4">
+            <!-- Language Switcher -->
+            <div class="flex items-center bg-white/50 rounded-lg p-1 border border-slate-200/60 shadow-sm">
+                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700' }}">ID</a>
+                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700' }}">EN</a>
+            </div>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    {{ __('Logout') }}
+                </button>
+            </form>
+        </div>
     </header>
 
     <div class="flex-1 overflow-y-auto p-6 md:p-12 flex flex-col items-center justify-center relative">

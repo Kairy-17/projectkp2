@@ -31,8 +31,8 @@
         <div class="flex items-center justify-between px-2">
             <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Bahasa</span>
             <div class="flex items-center bg-slate-100 rounded-lg p-1">
-                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ App::getLocale() == 'id' ? 'bg-white shadow-sm text-indigo-600 pointer-events-none' : 'text-slate-500 hover:text-slate-700' }}">ID</a>
-                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ App::getLocale() == 'en' ? 'bg-white shadow-sm text-indigo-600 pointer-events-none' : 'text-slate-500 hover:text-slate-700' }}">EN</a>
+                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700' }}">ID</a>
+                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700' }}">EN</a>
             </div>
         </div>
 

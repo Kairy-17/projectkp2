@@ -16,6 +16,13 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 });
 
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        session(['locale' => $locale]);
+    }
+    return back();
+})->name('lang.switch');
+
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -23,13 +30,6 @@ Route::middleware('auth')->group(function () {
         session()->forget('report_pin_verified');
         return view('dashboard');
     })->name('dashboard');
-
-    Route::get('/lang/{locale}', function ($locale) {
-        if (in_array($locale, ['id', 'en'])) {
-            session(['locale' => $locale]);
-        }
-        return back();
-    })->name('lang.switch');
 
     Route::resource('projects', ProjectController::class);
     Route::resource('team-members', TeamMemberController::class);

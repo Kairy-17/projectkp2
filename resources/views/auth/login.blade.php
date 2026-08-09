@@ -33,7 +33,7 @@
                 <img src="{{ asset('icons/logo-new.png') }}" alt="ProTrack Logo" class="h-32 w-auto object-contain drop-shadow-lg filter brightness-0 invert">
             </div>
             <h1 class="text-4xl font-bold mb-4 tracking-tight">ProTrack<span class="text-indigo-300">.</span></h1>
-            <p class="text-indigo-200 text-lg max-w-md mx-auto leading-relaxed">Platform manajemen proyek terpadu untuk efisiensi dan transparansi kinerja tim Anda.</p>
+            <p class="text-indigo-200 text-lg max-w-md mx-auto leading-relaxed">{{ __('Platform manajemen proyek terpadu untuk efisiensi dan transparansi kinerja tim Anda.') }}</p>
         </div>
     </div>
 
@@ -49,9 +49,15 @@
                 <!-- Decorative dot -->
                 <div class="absolute top-8 right-8 w-3 h-3 bg-indigo-500 rounded-full animate-pulse"></div>
 
+                <!-- Language Switcher (Moved inside card for safety) -->
+                <div class="absolute top-6 right-16 flex items-center bg-slate-100/70 rounded-lg p-1 shadow-inner border border-slate-200 z-50">
+                    <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">ID</a>
+                    <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">EN</a>
+                </div>
+
                 <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-slate-800 mb-2">Selamat Datang 👋</h2>
-                    <p class="text-slate-500 text-sm">Silakan masuk ke akun Anda untuk melanjutkan.</p>
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2">{{ __('Selamat Datang 👋') }}</h2>
+                    <p class="text-slate-500 text-sm">{{ __('Silakan masuk ke akun Anda untuk melanjutkan.') }}</p>
                 </div>
 
                 @if ($errors->any())
@@ -67,27 +73,44 @@
 
                 <form method="POST" action="{{ route('login.post') }}" class="space-y-6">
                     @csrf
-                    
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-slate-700 mb-2">Email</label>
-                        <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus
-                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-slate-400"
-                               placeholder="••••••••">
-                    </div>
 
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
+                            <label for="password" class="block text-sm font-medium text-slate-700">{{ __('Kata Sandi') }}</label>
                         </div>
-                        <input type="password" name="password" id="password" required
+                        <input type="password" name="password" id="password" required autofocus
                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-slate-400"
                                placeholder="••••••••">
                     </div>
 
                     <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl py-3.5 transition-all shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:-translate-y-0.5 mt-2">
-                        Masuk ke ProTrack
+                        {{ __('Masuk ke Dashboard') }}
                     </button>
                 </form>
+
+                <div class="mt-6 pt-6 border-t border-slate-100 text-sm text-center">
+                    @if(request()->cookie('protrack_user_name'))
+                        <span class="text-slate-500">{{ __('Perangkat ini dikenali sebagai:') }}</span> <strong class="text-indigo-600 font-semibold">{{ request()->cookie('protrack_user_name') }}</strong>.<br>
+                        <button onclick="setName()" class="text-xs text-slate-400 hover:text-indigo-600 mt-1 transition-colors">{{ __('(Ubah / Hapus?)') }}</button>
+                    @else
+                        <button onclick="setName()" class="text-indigo-600 font-medium hover:text-indigo-800 transition-colors">{{ __('Siapa Anda? (Set Nama Perangkat)') }}</button>
+                    @endif
+                </div>
+
+                <script>
+                    function setName() {
+                        let current = "{{ request()->cookie('protrack_user_name') }}";
+                        let name = prompt("{{ __('Masukkan nama Anda untuk perangkat ini (Kosongkan jika ingin menghapus memori):') }}", current);
+                        if (name !== null) {
+                            if (name.trim() === "") {
+                                document.cookie = "protrack_user_name=; max-age=0; path=/";
+                            } else {
+                                document.cookie = "protrack_user_name=" + encodeURIComponent(name) + "; max-age=31536000; path=/";
+                            }
+                            window.location.reload();
+                        }
+                    }
+                </script>
             </div>
             
             <p class="text-center text-slate-400 text-sm mt-8 anim-fade-up delay-200">
