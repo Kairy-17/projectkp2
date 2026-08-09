@@ -24,7 +24,7 @@
             <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg shadow-inner">
                 {{ substr($userName, 0, 1) }}
             </div>
-            <div>
+            <div class="hidden sm:block">
                 <p class="text-sm text-slate-500 font-medium leading-tight">{{ __('Selamat datang,') }}</p>
                 <p class="text-slate-800 font-semibold">{{ $userName }}</p>
             </div>
@@ -39,8 +39,8 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    {{ __('Logout') }}
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    <span class="hidden sm:inline">{{ __('Logout') }}</span>
                 </button>
             </form>
         </div>

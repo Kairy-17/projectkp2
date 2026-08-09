@@ -50,7 +50,7 @@
                 <div class="absolute top-8 right-8 w-3 h-3 bg-indigo-500 rounded-full animate-pulse"></div>
 
                 <!-- Language Switcher (Moved inside card for safety) -->
-                <div class="absolute top-6 right-16 flex items-center bg-slate-100/70 rounded-lg p-1 shadow-inner border border-slate-200 z-50">
+                <div class="absolute top-6 right-6 md:right-8 flex items-center bg-slate-100/70 rounded-lg p-1 shadow-inner border border-slate-200 z-50">
                     <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">ID</a>
                     <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">EN</a>
                 </div>
