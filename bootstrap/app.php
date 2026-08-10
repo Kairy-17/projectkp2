@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->encryptCookies(except: [
+            'protrack_user_name',
+        ]);
         $middleware->trustProxies(at: '*');
         $middleware->web(append: [
             \App\Http\Middleware\LanguageMiddleware::class,
