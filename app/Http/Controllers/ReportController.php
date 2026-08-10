@@ -26,7 +26,15 @@ class ReportController extends Controller
 
     public function store(Request $request)
     {
-        Report::create($request->all());
+        $data = $request->all();
+        $numericFields = ['nilai_proyek', 'cost_proyek', 'real_income', 'margin_persen', 'real_margin', 'keterlibatan_puti_persen'];
+        foreach ($numericFields as $field) {
+            if (empty($data[$field])) {
+                $data[$field] = 0;
+            }
+        }
+        
+        Report::create($data);
         return redirect()->route('reports.index')->with('success', 'Laporan berhasil ditambahkan.');
     }
 
@@ -40,7 +48,15 @@ class ReportController extends Controller
 
     public function update(Request $request, Report $report)
     {
-        $report->update($request->all());
+        $data = $request->all();
+        $numericFields = ['nilai_proyek', 'cost_proyek', 'real_income', 'margin_persen', 'real_margin', 'keterlibatan_puti_persen'];
+        foreach ($numericFields as $field) {
+            if (empty($data[$field])) {
+                $data[$field] = 0;
+            }
+        }
+
+        $report->update($data);
         return redirect()->route('reports.index')->with('success', 'Laporan berhasil diperbarui.');
     }
 
