@@ -32,8 +32,8 @@
         <div class="flex items-center gap-4">
             <!-- Language Switcher -->
             <div class="flex items-center bg-white/50 rounded-lg p-1 border border-slate-200/60 shadow-sm">
-                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700' }}">ID</a>
-                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700' }}">EN</a>
+                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600 pointer-events-none' : 'text-slate-500 hover:text-slate-700' }}">ID</a>
+                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600 pointer-events-none' : 'text-slate-500 hover:text-slate-700' }}">EN</a>
             </div>
 
             <form method="POST" action="{{ route('logout') }}">

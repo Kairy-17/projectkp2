@@ -57,8 +57,8 @@
 
                     <!-- Language Switcher -->
                     <div class="flex items-center bg-slate-100/70 rounded-lg p-1 shadow-inner border border-slate-200 shrink-0 mt-1">
-                        <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">ID</a>
-                        <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-700' }}">EN</a>
+                        <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale', 'id') == 'id' ? 'bg-white shadow-sm text-indigo-600 pointer-events-none' : 'text-slate-400 hover:text-slate-700' }}">ID</a>
+                        <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 text-[10px] font-bold rounded-md transition-all {{ session('locale') == 'en' ? 'bg-white shadow-sm text-indigo-600 pointer-events-none' : 'text-slate-400 hover:text-slate-700' }}">EN</a>
                     </div>
                 </div>
 
