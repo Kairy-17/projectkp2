@@ -11,4 +11,9 @@ class Project extends Model
     protected $casts = [
         'pic' => 'array',
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(ProjectTask::class);
+    }
 }

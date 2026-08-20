@@ -151,57 +151,151 @@
                 </div>
             </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm whitespace-nowrap">
+                <table class="w-full text-left text-sm whitespace-nowrap border-collapse">
                     <thead class="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider">
                         <tr>
-                            <th class="px-6 py-4 font-semibold">{{ __('Project') }}</th>
-                            <th class="px-6 py-4 font-semibold">{{ __('PIC (Tim Terlibat)') }}</th>
-                            <th class="px-6 py-4 font-semibold">{{ __('Status') }}</th>
-                            <th class="px-6 py-4 font-semibold">{{ __('Priority') }}</th>
-                            <th class="px-6 py-4 font-semibold">{{ __('Target') }}</th>
-                            <th class="px-6 py-4 text-right font-semibold">{{ __('Action') }}</th>
+                            <th class="px-6 py-4 font-semibold border-b border-slate-200">{{ __('Project') }}</th>
+                            <th class="px-6 py-4 font-semibold border-b border-slate-200">{{ __('Task') }}</th>
+                            <th class="px-6 py-4 font-semibold border-b border-slate-200">{{ __('Detail Task') }}</th>
+                            <th class="px-6 py-4 font-semibold border-b border-slate-200">{{ __('PIC') }}</th>
+                            <th class="px-6 py-4 font-semibold border-b border-slate-200">{{ __('Status') }}</th>
+                            <th class="px-6 py-4 font-semibold border-b border-slate-200">{{ __('Priority') }}</th>
+                            <th class="px-6 py-4 text-right font-semibold border-b border-slate-200">{{ __('Target') }}</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100 bg-white/40">
+                    <tbody class="bg-white/40">
                         @forelse($projects as $project)
-                        <tr class="hover:bg-white/80 transition-colors group" x-show="search === '' || {{ json_encode(strtolower($project->nama_project)) }}.includes(search.toLowerCase())">
-                            <td class="px-6 py-4">
-                                <span class="font-bold text-slate-800 block">{{ $project->nama_project }} ({{ $project->project_id }})</span>
-                                <div class="text-xs text-slate-500 mt-0.5">{{ $project->durasi_project ?? '-' }}</div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-wrap gap-1">
-                                    @if(is_array($project->pic))
-                                        @foreach($project->pic as $p)
-                                            @php
-                                                $memberColorData = $teamMembersData[$p] ?? null;
-                                                $bg = $memberColorData->warna_bg ?? '#f1f5f9';
-                                                $text = $memberColorData->warna_text ?? '#334155';
-                                            @endphp
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border" style="background-color: {{ $bg }}; color: {{ $text }}; border-color: {{ $bg }};">{{ $p }}</span>
+                            @php
+                                $totalProjectRows = 0;
+                                foreach($project->tasks as $task) {
+                                    $totalProjectRows += max(1, $task->details->count());
+                                }
+                                if ($totalProjectRows == 0) $totalProjectRows = 1;
+                            @endphp
+
+                            @if($project->tasks->count() > 0)
+                                @foreach($project->tasks as $taskIndex => $task)
+                                    @php
+                                        $detailCount = max(1, $task->details->count());
+                                    @endphp
+                                    
+                                    @if($task->details->count() > 0)
+                                        @foreach($task->details as $detailIndex => $detail)
+                                            <tr class="hover:bg-slate-50/50 transition-colors" x-show="search === '' || {{ json_encode(strtolower($project->nama_project)) }}.includes(search.toLowerCase())">
+                                                @if($taskIndex == 0 && $detailIndex == 0)
+                                                    <td class="px-6 py-4 align-top border-b border-slate-200 bg-white/30" rowspan="{{ $totalProjectRows }}">
+                                                        <span class="font-bold text-slate-800 block text-base">{{ $project->nama_project }}</span>
+                                                        <span class="text-xs text-slate-500 font-mono">{{ $project->project_id }}</span>
+                                                        <div class="mt-3">
+                                                            <a href="{{ route('projects.show', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg text-xs font-bold transition-colors">{{ __('Buka Project') }}</a>
+                                                        </div>
+                                                    </td>
+                                                @endif
+                                                
+                                                @if($detailIndex == 0)
+                                                    <td class="px-6 py-4 align-top border-b border-slate-200" rowspan="{{ $detailCount }}">
+                                                        <span class="font-semibold text-slate-800 block">{{ $task->nama_task }}</span>
+                                                    </td>
+                                                @endif
+                                                
+                                                <td class="px-6 py-4 border-b border-slate-100">
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></div>
+                                                        <span class="text-slate-600">{{ $detail->detail_task }}</span>
+                                                    </div>
+                                                </td>
+
+                                                @if($detailIndex == 0)
+                                                    <td class="px-6 py-4 align-top border-b border-slate-200" rowspan="{{ $detailCount }}">
+                                                        <div class="flex flex-col gap-1">
+                                                            @if(is_array($task->pic))
+                                                                @foreach($task->pic as $p)
+                                                                    @php
+                                                                        $memberColorData = $teamMembersData[$p] ?? null;
+                                                                        $bg = $memberColorData->warna_bg ?? '#f1f5f9';
+                                                                        $text = $memberColorData->warna_text ?? '#334155';
+                                                                    @endphp
+                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border w-fit" style="background-color: {{ $bg }}; color: {{ $text }}; border-color: {{ $bg }};">{{ $p }}</span>
+                                                                @endforeach
+                                                            @else
+                                                                <span class="text-slate-400 text-xs">-</span>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 align-top border-b border-slate-200" rowspan="{{ $detailCount }}">
+                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getStatusColor($task->status_task) }}">{{ __($task->status_task) }}</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 align-top border-b border-slate-200" rowspan="{{ $detailCount }}">
+                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getPriorityColor($task->priority) }}">{{ __($task->priority) }}</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-right align-top border-b border-slate-200" rowspan="{{ $detailCount }}">
+                                                        <span class="text-slate-600 font-medium">{{ $task->target_selesai ? \Carbon\Carbon::parse($task->target_selesai)->format('d M Y') : '-' }}</span>
+                                                    </td>
+                                                @endif
+                                            </tr>
                                         @endforeach
                                     @else
-                                        <span class="text-slate-500">-</span>
+                                        <!-- Task tanpa detail -->
+                                        <tr class="hover:bg-slate-50/50 transition-colors" x-show="search === '' || {{ json_encode(strtolower($project->nama_project)) }}.includes(search.toLowerCase())">
+                                            @if($taskIndex == 0)
+                                                <td class="px-6 py-4 align-top border-b border-slate-200 bg-white/30" rowspan="{{ $totalProjectRows }}">
+                                                    <span class="font-bold text-slate-800 block text-base">{{ $project->nama_project }}</span>
+                                                    <span class="text-xs text-slate-500 font-mono">{{ $project->project_id }}</span>
+                                                    <div class="mt-3">
+                                                        <a href="{{ route('projects.show', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg text-xs font-bold transition-colors">{{ __('Buka Project') }}</a>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                            <td class="px-6 py-4 align-top border-b border-slate-200">
+                                                <span class="font-semibold text-slate-800 block">{{ $task->nama_task }}</span>
+                                            </td>
+                                            <td class="px-6 py-4 border-b border-slate-200">
+                                                <span class="text-slate-400 italic text-xs">{{ __('(Tidak ada detail task)') }}</span>
+                                            </td>
+                                            <td class="px-6 py-4 align-top border-b border-slate-200">
+                                                <div class="flex flex-col gap-1">
+                                                    @if(is_array($task->pic))
+                                                        @foreach($task->pic as $p)
+                                                            @php
+                                                                $memberColorData = $teamMembersData[$p] ?? null;
+                                                                $bg = $memberColorData->warna_bg ?? '#f1f5f9';
+                                                                $text = $memberColorData->warna_text ?? '#334155';
+                                                            @endphp
+                                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border w-fit" style="background-color: {{ $bg }}; color: {{ $text }}; border-color: {{ $bg }};">{{ $p }}</span>
+                                                        @endforeach
+                                                    @else
+                                                        <span class="text-slate-400 text-xs">-</span>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 align-top border-b border-slate-200">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getStatusColor($task->status_task) }}">{{ __($task->status_task) }}</span>
+                                            </td>
+                                            <td class="px-6 py-4 align-top border-b border-slate-200">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getPriorityColor($task->priority) }}">{{ __($task->priority) }}</span>
+                                            </td>
+                                            <td class="px-6 py-4 text-right align-top border-b border-slate-200">
+                                                <span class="text-slate-600 font-medium">{{ $task->target_selesai ? \Carbon\Carbon::parse($task->target_selesai)->format('d M Y') : '-' }}</span>
+                                            </td>
+                                        </tr>
                                     @endif
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getStatusColor($project->status_project) }}">{{ __($project->status_project) }}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ getPriorityColor($project->priority) }}">{{ __($project->priority) }}</span>
-                            </td>
-                            <td class="px-6 py-4 text-slate-600 font-medium">{{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</td>
-                            <td class="px-6 py-4 text-right">
-                                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                                    <a href="{{ route('projects.show', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg text-xs font-bold">{{ __('Detail') }}</a>
-                                    <a href="{{ route('projects.edit', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-bold">{{ __('Edit') }}</a>
-                                </div>
-                            </td>
-                        </tr>
+                                @endforeach
+                            @else
+                                <!-- Project tanpa task -->
+                                <tr class="hover:bg-slate-50/50 transition-colors" x-show="search === '' || {{ json_encode(strtolower($project->nama_project)) }}.includes(search.toLowerCase())">
+                                    <td class="px-6 py-4 align-top border-b border-slate-200 bg-white/30">
+                                        <span class="font-bold text-slate-800 block text-base">{{ $project->nama_project }}</span>
+                                        <span class="text-xs text-slate-500 font-mono">{{ $project->project_id }}</span>
+                                        <div class="mt-3">
+                                            <a href="{{ route('projects.show', $project->id) }}" class="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg text-xs font-bold transition-colors">{{ __('Buka Project') }}</a>
+                                        </div>
+                                    </td>
+                                    <td colspan="6" class="px-6 py-8 text-center text-slate-400 italic border-b border-slate-200">{{ __('Belum ada task di project ini.') }}</td>
+                                </tr>
+                            @endif
                         @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-8 text-center text-slate-500">{{ __('Belum ada data project.') }}</td>
+                            <td colspan="7" class="px-6 py-12 text-center text-slate-500">{{ __('Belum ada data project.') }}</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -217,26 +311,39 @@
             </div>
             @forelse($projects as $project)
             <div class="glass p-4 rounded-xl relative border border-slate-100" x-show="search === '' || {{ json_encode(strtolower($project->nama_project)) }}.includes(search.toLowerCase())">
-                <div class="absolute top-4 right-4 flex flex-col gap-1 items-end">
-                    <span class="px-2 py-1 {{ getPriorityColor($project->priority) }} text-[10px] font-bold rounded uppercase border">{{ __($project->priority) }}</span>
-                    <span class="px-2 py-1 {{ getStatusColor($project->status_project) }} text-[10px] font-bold rounded border">{{ __($project->status_project) }}</span>
-                </div>
-                <a href="{{ route('projects.show', $project->id) }}" class="font-bold text-lg mb-1 pr-20 text-indigo-700 block">{{ $project->nama_project }} ({{ $project->project_id }})</a>
-                <p class="text-xs text-slate-500 mb-3">{{ __('Target:') }} {{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</p>
-                <div class="flex items-center justify-between mt-4">
-                    <div class="flex flex-wrap gap-1">
-                        @if(is_array($project->pic))
-                            @foreach($project->pic as $p)
-                                @php
-                                    $memberColorData = $teamMembersData[$p] ?? null;
-                                    $bg = $memberColorData->warna_bg ?? '#f1f5f9';
-                                    $text = $memberColorData->warna_text ?? '#334155';
-                                @endphp
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border" style="background-color: {{ $bg }}; color: {{ $text }}; border-color: {{ $bg }};">{{ $p }}</span>
-                            @endforeach
-                        @endif
+                <a href="{{ route('projects.show', $project->id) }}" class="font-bold text-lg mb-2 text-indigo-700 block">{{ $project->nama_project }} ({{ $project->project_id }})</a>
+                
+                @if($project->tasks->count() > 0)
+                    <div class="space-y-3 mt-3">
+                        @foreach($project->tasks as $task)
+                            <div class="bg-white/60 p-3 rounded-lg border border-slate-100">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="font-semibold text-slate-700 text-sm">{{ $task->nama_task }}</span>
+                                    <div class="flex flex-col gap-1 items-end">
+                                        <span class="px-2 py-0.5 {{ getStatusColor($task->status_task) }} text-[9px] font-bold rounded border">{{ __($task->status_task) }}</span>
+                                        <span class="px-2 py-0.5 {{ getPriorityColor($task->priority) }} text-[9px] font-bold rounded uppercase border">{{ __($task->priority) }}</span>
+                                    </div>
+                                </div>
+                                <div class="text-[10px] text-slate-500 mb-2">{{ __('Target:') }} {{ $task->target_selesai ? \Carbon\Carbon::parse($task->target_selesai)->format('d M Y') : '-' }}</div>
+                                
+                                <div class="flex flex-wrap gap-1">
+                                    @if(is_array($task->pic))
+                                        @foreach($task->pic as $p)
+                                            @php
+                                                $memberColorData = $teamMembersData[$p] ?? null;
+                                                $bg = $memberColorData->warna_bg ?? '#f1f5f9';
+                                                $text = $memberColorData->warna_text ?? '#334155';
+                                            @endphp
+                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold border" style="background-color: {{ $bg }}; color: {{ $text }}; border-color: {{ $bg }};">{{ $p }}</span>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                </div>
+                @else
+                    <div class="text-xs text-slate-400 italic mt-2">{{ __('Belum ada task') }}</div>
+                @endif
             </div>
             @empty
             <div class="glass p-4 rounded-xl text-center text-slate-500">{{ __('Belum ada data project.') }}</div>

@@ -43,10 +43,7 @@
                 <div>
                     <div class="text-sm text-slate-500 font-medium mb-1">ID: {{ $project->project_id }}</div>
                     <h1 class="text-3xl font-bold text-slate-800 mb-2">{{ $project->nama_project }}</h1>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border {{ showStatusColor($project->status_project) }}">{{ $project->status_project }}</span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border {{ showPriorityColor($project->priority) }}">{{ $project->priority }} Priority</span>
-                    </div>
+                        <!-- Status and Priority will not be shown at project level anymore -->
                 </div>
                 <div class="flex flex-col sm:items-end gap-1">
                     <div class="text-sm text-slate-500">Tahun: <span class="font-semibold text-slate-700">{{ $project->tahun ?? '-' }}</span></div>
@@ -56,66 +53,24 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Kiri -->
+                <!-- Kiri: Info Utama Project -->
                 <div class="space-y-6">
                     <div>
                         <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Deskripsi Singkat</h3>
                         <p class="text-slate-700 leading-relaxed">{{ $project->deskripsi_singkat ?? 'Tidak ada deskripsi.' }}</p>
                     </div>
                     <div>
-                        <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">PIC (Tim Terlibat)</h3>
-                        <div class="flex flex-wrap gap-2">
-                            @if(is_array($project->pic) && count($project->pic) > 0)
-                                @foreach($project->pic as $p)
-                                    @php
-                                        $memberColorData = $teamMembersData[$p] ?? null;
-                                        $bg = $memberColorData->warna_bg ?? '#e0e7ff';
-                                        $text = $memberColorData->warna_text ?? '#4f46e5';
-                                    @endphp
-                                    <div class="flex items-center gap-2 bg-white border px-3 py-1.5 rounded-lg shadow-sm" style="border-color: {{ $bg }}">
-                                        <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style="background-color: {{ $bg }}; color: {{ $text }};">{{ substr($p, 0, 1) }}</div>
-                                        <span class="font-bold text-sm" style="color: {{ $text }};">{{ $p }}</span>
-                                    </div>
-                                @endforeach
-                            @else
-                                <span class="text-slate-500 italic text-sm">Belum ada tim yang ditugaskan.</span>
-                            @endif
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Durasi & Timeline</h3>
-                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3 text-sm">
-                            <div class="flex justify-between border-b border-slate-200 pb-2">
-                                <span class="text-slate-500">Durasi Project</span>
-                                <span class="font-medium text-slate-800">{{ $project->durasi_project ?? '-' }}</span>
-                            </div>
-                            <div class="flex justify-between border-b border-slate-200 pb-2">
-                                <span class="text-slate-500">Tanggal Mulai</span>
-                                <span class="font-medium text-slate-800">{{ $project->tanggal_mulai ? \Carbon\Carbon::parse($project->tanggal_mulai)->format('d M Y') : '-' }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-500">Target Selesai</span>
-                                <span class="font-medium text-slate-800">{{ $project->target_selesai ? \Carbon\Carbon::parse($project->target_selesai)->format('d M Y') : '-' }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kanan -->
-                <div class="space-y-6">
-                    <div>
-                        <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Progress</h3>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-sm font-medium text-indigo-700">{{ $project->progress ?? 0 }}% Selesai</span>
-                        </div>
-                        <div class="w-full bg-slate-200 rounded-full h-2.5">
-                            <div class="bg-indigo-600 h-2.5 rounded-full" style="width: {{ $project->progress ?? 0 }}%"></div>
-                        </div>
-                    </div>
-
-                    <div>
                         <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Informasi Tambahan</h3>
                         <div class="space-y-4">
+                            <div>
+                                <span class="block text-xs font-medium text-slate-500">Persentase Progress</span>
+                                <div class="flex items-center gap-3 mt-1">
+                                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                        <div class="bg-indigo-600 h-2.5 rounded-full" style="width: {{ $project->progress ?? 0 }}%"></div>
+                                    </div>
+                                    <span class="text-sm font-medium text-indigo-700 whitespace-nowrap">{{ $project->progress ?? 0 }}%</span>
+                                </div>
+                            </div>
                             <div>
                                 <span class="block text-xs font-medium text-slate-500">Tahap Saat Ini (Milestone)</span>
                                 <p class="text-sm text-slate-800 mt-0.5 bg-slate-50 p-2 rounded border border-slate-100">{{ $project->milestone_saat_ini ?? '-' }}</p>
@@ -124,12 +79,70 @@
                                 <span class="block text-xs font-medium text-slate-500">Tindakan Selanjutnya (Next Action)</span>
                                 <p class="text-sm text-slate-800 mt-0.5 bg-slate-50 p-2 rounded border border-slate-100">{{ $project->next_action ?? '-' }}</p>
                             </div>
-                            <div>
-                                <span class="block text-xs font-medium text-slate-500">Kendala / Hambatan</span>
-                                <p class="text-sm text-red-600 mt-0.5 bg-red-50 p-2 rounded border border-red-100">{{ $project->kendala_issue ?? '-' }}</p>
-                            </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Kanan: Daftar Task -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Daftar Pekerjaan (Tasks)</h3>
+                    @forelse($project->tasks as $task)
+                        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm relative">
+                            <div class="absolute top-4 right-4 flex flex-col gap-1 items-end">
+                                <span class="px-2 py-0.5 {{ showStatusColor($task->status_task) }} text-[10px] font-bold rounded border">{{ __($task->status_task) }}</span>
+                                <span class="px-2 py-0.5 {{ showPriorityColor($task->priority) }} text-[10px] font-bold rounded uppercase border">{{ __($task->priority) }}</span>
+                            </div>
+                            
+                            <h4 class="font-bold text-slate-800 text-lg mb-1 pr-20">{{ $task->nama_task }}</h4>
+                            <div class="text-xs text-slate-500 mb-3">Target Selesai: <span class="font-medium text-slate-700">{{ $task->target_selesai ? \Carbon\Carbon::parse($task->target_selesai)->format('d M Y') : '-' }}</span></div>
+
+                            @if($task->kendala_issue)
+                                <div class="mb-3 bg-red-50 text-red-700 text-xs p-2 rounded border border-red-100">
+                                    <span class="font-semibold">Kendala:</span> {{ $task->kendala_issue }}
+                                </div>
+                            @endif
+                            
+                            <div class="mb-4">
+                                <span class="block text-xs font-semibold text-slate-500 mb-1">PIC:</span>
+                                <div class="flex flex-wrap gap-1">
+                                    @if(is_array($task->pic) && count($task->pic) > 0)
+                                        @foreach($task->pic as $p)
+                                            @php
+                                                $memberColorData = $teamMembersData[$p] ?? null;
+                                                $bg = $memberColorData->warna_bg ?? '#e0e7ff';
+                                                $text = $memberColorData->warna_text ?? '#4f46e5';
+                                            @endphp
+                                            <div class="flex items-center gap-1.5 bg-white border px-2 py-0.5 rounded-lg shadow-sm" style="border-color: {{ $bg }}">
+                                                <span class="font-bold text-[10px]" style="color: {{ $text }};">{{ $p }}</span>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <span class="text-slate-400 italic text-[10px]">Belum ada PIC</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="border-t border-slate-100 pt-3">
+                                <span class="block text-xs font-semibold text-slate-500 mb-2">Detail Pekerjaan:</span>
+                                @if($task->details->count() > 0)
+                                    <ul class="space-y-1.5">
+                                        @foreach($task->details as $detail)
+                                            <li class="flex items-start gap-2 text-sm text-slate-700 bg-slate-50/50 p-1.5 rounded">
+                                                <div class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0 mt-1.5"></div>
+                                                {{ $detail->detail_task }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <span class="text-slate-400 italic text-xs">Tidak ada detail pekerjaan.</span>
+                                @endif
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center p-6 bg-slate-50 rounded-xl border border-slate-200">
+                            <span class="text-slate-500 italic">Belum ada task yang ditambahkan.</span>
+                        </div>
+                    @endforelse
                 </div>
             </div>
             
