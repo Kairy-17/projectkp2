@@ -194,7 +194,7 @@
                                                 
                                                 @if($detailIndex == 0)
                                                     <td class="px-6 py-4 align-top border-b border-slate-200" rowspan="{{ $detailCount }}">
-                                                        <span class="font-semibold text-slate-800 block">{{ $task->nama_task }}</span>
+                                                        <span class="font-semibold text-slate-800 block">{{ __($task->nama_task) }}</span>
                                                     </td>
                                                 @endif
                                                 
@@ -247,7 +247,7 @@
                                                 </td>
                                             @endif
                                             <td class="px-6 py-4 align-top border-b border-slate-200">
-                                                <span class="font-semibold text-slate-800 block">{{ $task->nama_task }}</span>
+                                                <span class="font-semibold text-slate-800 block">{{ __($task->nama_task) }}</span>
                                             </td>
                                             <td class="px-6 py-4 border-b border-slate-200">
                                                 <span class="text-slate-400 italic text-xs">{{ __('(Tidak ada detail task)') }}</span>
@@ -318,7 +318,7 @@
                         @foreach($project->tasks as $task)
                             <div class="bg-white/60 p-3 rounded-lg border border-slate-100">
                                 <div class="flex justify-between items-start mb-2">
-                                    <span class="font-semibold text-slate-700 text-sm">{{ $task->nama_task }}</span>
+                                    <span class="font-semibold text-slate-700 text-sm">{{ __($task->nama_task) }}</span>
                                     <div class="flex flex-col gap-1 items-end">
                                         <span class="px-2 py-0.5 {{ getStatusColor($task->status_task) }} text-[9px] font-bold rounded border">{{ __($task->status_task) }}</span>
                                         <span class="px-2 py-0.5 {{ getPriorityColor($task->priority) }} text-[9px] font-bold rounded uppercase border">{{ __($task->priority) }}</span>

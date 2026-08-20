@@ -93,7 +93,7 @@
                                 <span class="px-2 py-0.5 {{ showPriorityColor($task->priority) }} text-[10px] font-bold rounded uppercase border">{{ __($task->priority) }}</span>
                             </div>
                             
-                            <h4 class="font-bold text-slate-800 text-lg mb-1 pr-20">{{ $task->nama_task }}</h4>
+                            <h4 class="font-bold text-slate-800 text-lg mb-1 pr-20">{{ __($task->nama_task) }}</h4>
                             <div class="text-xs text-slate-500 mb-3">Target Selesai: <span class="font-medium text-slate-700">{{ $task->target_selesai ? \Carbon\Carbon::parse($task->target_selesai)->format('d M Y') : '-' }}</span></div>
 
                             @if($task->kendala_issue)
