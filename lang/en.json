@@ -96,5 +96,19 @@
     "Siapa Anda? (Set Nama Perangkat)": "Who are you? (Set Device Name)",
     "Masukkan nama Anda untuk perangkat ini (Kosongkan jika ingin menghapus memori):": "Enter your name for this device (Leave blank to clear memory):",
     "Selamat datang,": "Welcome,",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Daftar Pekerjaan (Tasks)": "Task List (Tasks)",
+    "Tambah Task": "Add Task",
+    "Nama Task": "Task Name",
+    "PIC Task Ini": "Task PIC",
+    "Prioritas": "Priority",
+    "Kendala (Opsional)": "Constraints (Optional)",
+    "Detail Pekerjaan": "Task Details",
+    "Tulis detail tugas di sini...": "Write task details here...",
+    "Tambah Detail Lagi": "Add More Details",
+    "Durasi Keseluruhan Project": "Overall Project Duration",
+    "Tanggal Mulai Project": "Project Start Date",
+    "Target Selesai Project": "Project Due Date",
+    "Deskripsi Singkat Project (Opsional)": "Short Project Description (Optional)",
+    "Contoh: Weekly Internal": "Example: Weekly Internal"
 }
