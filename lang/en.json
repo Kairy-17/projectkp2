@@ -110,5 +110,11 @@
     "Tanggal Mulai Project": "Project Start Date",
     "Target Selesai Project": "Project Due Date",
     "Deskripsi Singkat Project (Opsional)": "Short Project Description (Optional)",
-    "Contoh: Weekly Internal": "Example: Weekly Internal"
+    "Contoh: Weekly Internal": "Example: Weekly Internal",
+    "Task": "Task",
+    "Detail Task": "Detail Task",
+    "Buka Project": "Open Project",
+    "(Tidak ada detail task)": "(No task details)",
+    "Belum ada task di project ini.": "No tasks in this project yet.",
+    "Belum ada task": "No task yet"
 }
